@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Story Learner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>📚 Kids Story Learner</h1>
+            <p>Learn to read with phonetic highlights!</p>
+        </header>
+
+        <nav class="navigation">
+            <button id="upload-tab" class="nav-btn active">Upload Story</button>
+            <button id="stories-tab" class="nav-btn">My Stories</button>
+            <button id="read-tab" class="nav-btn">Read Story</button>
+        </nav>
+
+        <!-- Upload Story Section -->
+        <div id="upload-section" class="section active">
+            <div class="upload-container">
+                <h2>📝 Create a New Story</h2>
+                <div class="story-form">
+                    <input type="text" id="story-title" placeholder="Enter story title..." required>
+                    
+                    <textarea id="story-text" placeholder="Type your story here..." rows="10" required></textarea>
+                    
+                    <div class="image-upload">
+                        <label for="story-image">📸 Add Story Image (optional):</label>
+                        <input type="file" id="story-image" accept="image/*">
+                        <div id="image-preview"></div>
+                    </div>
+                    
+                    <button id="save-story" class="btn-primary">💾 Save Story</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stories List Section -->
+        <div id="stories-section" class="section">
+            <div class="stories-container">
+                <h2>📖 My Stories</h2>
+                <div id="stories-list" class="stories-grid">
+                    <!-- Stories will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Read Story Section -->
+        <div id="read-section" class="section">
+            <div class="reading-container">
+                <div class="story-header">
+                    <button id="back-to-stories" class="btn-secondary">← Back to Stories</button>
+                    <h2 id="current-story-title">Story Title</h2>
+                    <button id="toggle-highlights" class="btn-secondary">🎨 Toggle Highlights</button>
+                </div>
+                
+                <div class="story-content">
+                    <div id="story-image-display"></div>
+                    <div id="story-text-display" class="story-text"></div>
+                </div>
+                
+                <div class="reading-controls">
+                    <div class="blend-legend">
+                        <h3>📚 Phonetic Blends:</h3>
+                        <div class="legend-items">
+                            <span class="legend-item"><span class="highlight-start">st</span> Starting Blends</span>
+                            <span class="legend-item"><span class="highlight-end">ing</span> Ending Blends</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
