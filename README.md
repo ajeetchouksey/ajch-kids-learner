@@ -5,6 +5,7 @@ A web application designed to help kids learn to read by highlighting phonetic b
 ## Features
 
 - **📝 Story Upload**: Create and upload stories with text and optional images
+- **🔍 OCR Text Extraction**: Extract text from uploaded images using Tesseract.js
 - **📚 Story Management**: View, read, and delete stored stories
 - **🎨 Phonetic Highlighting**: Automatic highlighting of starting and ending blends
 - **💾 Local Storage**: Stories are saved in browser's local storage
@@ -13,11 +14,12 @@ A web application designed to help kids learn to read by highlighting phonetic b
 ## How It Works
 
 1. **Upload Stories**: Add story title, text content, and optional images
-2. **Browse Stories**: View all uploaded stories in a grid layout
-3. **Read with Highlights**: Stories display with phonetic blends highlighted:
+2. **OCR Text Extraction**: Upload an image with text and click "🔍 Extract Text from Image" to automatically extract and populate the story text
+3. **Browse Stories**: View all uploaded stories in a grid layout
+4. **Read with Highlights**: Stories display with phonetic blends highlighted:
    - **Green highlights**: Starting blends (bl, br, cl, cr, dr, fl, fr, gl, gr, pl, pr, sc, sk, sl, sm, sn, sp, st, sw, tr, tw, ch, sh, th, wh, ph)
    - **Orange highlights**: Ending blends (ing, tion, sion, ness, ment, ly, ed, er, est, an, en, on, ck, ng, nk, mp, nd, nt)
-4. **Toggle Function**: Turn highlights on/off for comparison
+5. **Toggle Function**: Turn highlights on/off for comparison
 
 ## Getting Started
 
@@ -44,9 +46,10 @@ The app comes with sample stories to demonstrate the functionality:
 ## Technical Details
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **OCR Library**: Tesseract.js for client-side text extraction
 - **Storage**: Browser Local Storage API
 - **Responsive**: CSS Grid and Flexbox
-- **No Dependencies**: Pure vanilla JavaScript implementation
+- **No Dependencies**: Pure vanilla JavaScript implementation with optional OCR enhancement
 
 ## File Structure
 
