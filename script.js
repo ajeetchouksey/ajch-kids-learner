@@ -4,6 +4,21 @@ class StoryLearnerApp {
         this.stories = this.loadStoriesFromStorage();
         this.currentStory = null;
         this.highlightsEnabled = true;
+        
+        // Interactive reading properties
+        this.readingMode = 'normal'; // 'normal', 'guided', 'auto'
+        this.currentWordIndex = 0;
+        this.words = [];
+        this.isPlaying = false;
+        this.readingTimer = null;
+        this.startTime = null;
+        this.readingSpeed = 3; // 1-5 scale
+        
+        // Reading stats
+        this.wordsRead = 0;
+        this.readingStreak = 1;
+        this.readingScore = 0;
+        
         this.init();
     }
 
@@ -27,6 +42,15 @@ class StoryLearnerApp {
         // Reading controls
         document.getElementById('back-to-stories').addEventListener('click', () => this.showSection('stories'));
         document.getElementById('toggle-highlights').addEventListener('click', () => this.toggleHighlights());
+        
+        // Interactive reading controls
+        document.getElementById('normal-reading').addEventListener('click', () => this.setReadingMode('normal'));
+        document.getElementById('guided-reading').addEventListener('click', () => this.setReadingMode('guided'));
+        document.getElementById('auto-reading').addEventListener('click', () => this.setReadingMode('auto'));
+        document.getElementById('play-pause-btn').addEventListener('click', () => this.togglePlayPause());
+        document.getElementById('prev-word-btn').addEventListener('click', () => this.previousWord());
+        document.getElementById('next-word-btn').addEventListener('click', () => this.nextWord());
+        document.getElementById('reading-speed').addEventListener('input', (e) => this.setReadingSpeed(e.target.value));
 
         // Enter key support for form
         document.getElementById('story-title').addEventListener('keypress', (e) => {
@@ -309,12 +333,109 @@ class StoryLearnerApp {
             imageDisplay.innerHTML = '';
         }
 
-        // Display text with phonetic highlights
+        // Reset reading state
+        this.currentWordIndex = 0;
+        this.startTime = null;
+        this.wordsRead = 0;
+        this.stopReading();
+
+        // Display text with enhanced highlighting for interactive modes
         const textDisplay = document.getElementById('story-text-display');
-        if (this.highlightsEnabled) {
+        
+        if (this.readingMode === 'guided' || this.readingMode === 'auto') {
+            textDisplay.innerHTML = this.createInteractiveText(story.text);
+        } else if (this.highlightsEnabled) {
             textDisplay.innerHTML = this.highlightPhoneticBlends(story.text);
         } else {
             textDisplay.textContent = story.text;
+        }
+        
+        this.updateReadingProgress();
+        this.updateReadingStats();
+    }
+
+    createInteractiveText(text) {
+        // Split text into words while preserving punctuation and spacing
+        const wordPattern = /(\S+)/g;
+        const words = [];
+        let match;
+        let lastIndex = 0;
+        let wordIndex = 0;
+
+        while ((match = wordPattern.exec(text)) !== null) {
+            // Add any text before this word (spaces, etc.)
+            if (match.index > lastIndex) {
+                words.push(text.slice(lastIndex, match.index));
+            }
+            
+            // Add the word with highlighting and data attributes
+            const word = match[1];
+            const highlightedWord = this.highlightsEnabled ? 
+                this.highlightPhoneticBlendsInWord(word) : word;
+            
+            words.push(
+                `<span class="word" data-word-index="${wordIndex}" onclick="app.jumpToWord(${wordIndex})">${highlightedWord}</span>`
+            );
+            
+            wordIndex++;
+            lastIndex = match.index + match[0].length;
+        }
+
+        // Add any remaining text
+        if (lastIndex < text.length) {
+            words.push(text.slice(lastIndex));
+        }
+
+        // Store words for navigation
+        this.words = Array.from({length: wordIndex}, (_, i) => i);
+        
+        return words.join('');
+    }
+
+    highlightPhoneticBlendsInWord(word) {
+        // Common starting blends
+        const startingBlends = ['bl', 'br', 'cl', 'cr', 'dr', 'fl', 'fr', 'gl', 'gr', 'pl', 'pr', 'sc', 'sk', 'sl', 'sm', 'sn', 'sp', 'st', 'sw', 'tr', 'tw', 'ch', 'sh', 'th', 'wh', 'ph'];
+        
+        // Common ending blends
+        const endingBlends = ['ing', 'tion', 'sion', 'ness', 'ment', 'ly', 'ed', 'er', 'est', 'an', 'en', 'on', 'ck', 'ng', 'nk', 'mp', 'nd', 'nt'];
+
+        if (!/\w/.test(word)) return word; // Skip non-word content
+
+        let highlightedWord = word;
+        let hasHighlight = false;
+
+        // Check for starting blends
+        if (!hasHighlight) {
+            for (const blend of startingBlends) {
+                const regex = new RegExp(`^(${this.escapeRegex(blend)})`, 'i');
+                if (regex.test(word)) {
+                    highlightedWord = word.replace(regex, '<span class="highlight-start">$1</span>');
+                    hasHighlight = true;
+                    break;
+                }
+            }
+        }
+
+        // Check for ending blends
+        if (!hasHighlight) {
+            for (const blend of endingBlends) {
+                const regex = new RegExp(`(${this.escapeRegex(blend)})$`, 'i');
+                if (regex.test(word)) {
+                    highlightedWord = word.replace(regex, '<span class="highlight-end">$1</span>');
+                    hasHighlight = true;
+                    break;
+                }
+            }
+        }
+
+        return highlightedWord;
+    }
+
+    jumpToWord(wordIndex) {
+        if (this.readingMode === 'guided') {
+            this.currentWordIndex = wordIndex;
+            this.highlightCurrentWord();
+            this.updateReadingProgress();
         }
     }
 
@@ -388,6 +509,274 @@ class StoryLearnerApp {
             this.loadStoriesList();
             this.showMessage('Story deleted successfully!', 'success');
         }
+    }
+
+    // Interactive Reading Methods
+    setReadingMode(mode) {
+        this.readingMode = mode;
+        this.stopReading();
+        
+        // Update UI
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`${mode}-reading`).classList.add('active');
+        
+        const playbackControls = document.querySelector('.playback-controls');
+        if (mode === 'guided' || mode === 'auto') {
+            playbackControls.style.display = 'block';
+        } else {
+            playbackControls.style.display = 'none';
+        }
+        
+        if (this.currentStory) {
+            this.displayStory(this.currentStory);
+            this.updateReadingProgress();
+        }
+    }
+
+    togglePlayPause() {
+        if (this.isPlaying) {
+            this.stopReading();
+        } else {
+            this.startReading();
+        }
+    }
+
+    startReading() {
+        if (this.readingMode === 'normal') return;
+        
+        this.isPlaying = true;
+        this.startTime = this.startTime || Date.now();
+        this.updatePlayPauseButton();
+        this.startReadingTimer();
+        
+        if (this.readingMode === 'auto') {
+            this.autoReadNext();
+        }
+    }
+
+    stopReading() {
+        this.isPlaying = false;
+        this.updatePlayPauseButton();
+        if (this.readingTimer) {
+            clearTimeout(this.readingTimer);
+            this.readingTimer = null;
+        }
+    }
+
+    autoReadNext() {
+        if (!this.isPlaying || this.readingMode !== 'auto') return;
+        
+        if (this.currentWordIndex < this.words.length) {
+            this.highlightCurrentWord();
+            this.currentWordIndex++;
+            this.wordsRead++;
+            this.updateReadingProgress();
+            this.checkAchievements();
+            
+            const delay = this.getReadingDelay();
+            this.readingTimer = setTimeout(() => this.autoReadNext(), delay);
+        } else {
+            this.stopReading();
+            this.showCompletionCelebration();
+        }
+    }
+
+    getReadingDelay() {
+        const speeds = [2000, 1500, 1000, 700, 500]; // milliseconds
+        return speeds[this.readingSpeed - 1] || 1000;
+    }
+
+    previousWord() {
+        if (this.currentWordIndex > 0) {
+            this.currentWordIndex--;
+            this.highlightCurrentWord();
+            this.updateReadingProgress();
+        }
+    }
+
+    nextWord() {
+        if (this.currentWordIndex < this.words.length) {
+            this.currentWordIndex++;
+            this.wordsRead++;
+            this.highlightCurrentWord();
+            this.updateReadingProgress();
+            this.checkAchievements();
+            
+            if (this.currentWordIndex >= this.words.length) {
+                this.showCompletionCelebration();
+            }
+        }
+    }
+
+    setReadingSpeed(value) {
+        this.readingSpeed = parseInt(value);
+        const speedNames = ['Very Slow', 'Slow', 'Normal', 'Fast', 'Very Fast'];
+        document.getElementById('speed-display').textContent = speedNames[value - 1];
+    }
+
+    highlightCurrentWord() {
+        // Remove previous current word highlighting
+        document.querySelectorAll('.current-word-highlight').forEach(el => {
+            if (!el.classList.contains('legend-item')) {
+                el.classList.remove('current-word-highlight');
+            }
+        });
+
+        // Highlight current word
+        if (this.currentWordIndex < this.words.length) {
+            const wordElement = document.querySelector(`[data-word-index="${this.currentWordIndex}"]`);
+            if (wordElement) {
+                wordElement.classList.add('current-word-highlight');
+                wordElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }
+
+    updateReadingProgress() {
+        const currentWord = Math.min(this.currentWordIndex, this.words.length);
+        const totalWords = this.words.length;
+        const progressPercent = totalWords > 0 ? (currentWord / totalWords) * 100 : 0;
+        
+        document.getElementById('current-word').textContent = currentWord;
+        document.getElementById('total-words').textContent = totalWords;
+        document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+        
+        // Update reading time
+        if (this.startTime) {
+            const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('reading-time').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+    }
+
+    updatePlayPauseButton() {
+        const button = document.getElementById('play-pause-btn');
+        button.textContent = this.isPlaying ? '⏸️ Pause' : '▶️ Play';
+    }
+
+    startReadingTimer() {
+        const updateTimer = () => {
+            if (this.isPlaying) {
+                this.updateReadingProgress();
+                setTimeout(updateTimer, 1000);
+            }
+        };
+        updateTimer();
+    }
+
+    // Achievement and Animation Functions
+    checkAchievements() {
+        this.readingScore += 10;
+        this.updateReadingStats();
+        
+        // Check for specific achievements
+        if (this.wordsRead === 10) {
+            this.showAchievement("🎯 First 10 Words!", "Great start, keep reading!");
+            this.createFloatingIcons('🎯');
+        } else if (this.wordsRead === 25) {
+            this.showAchievement("⭐ Quarter Done!", "You're doing amazing!");
+            this.createFloatingIcons('⭐');
+        } else if (this.wordsRead % 5 === 0 && this.wordsRead > 0) {
+            this.createFloatingIcons('✨');
+            this.readingStreak++;
+        }
+    }
+
+    showCompletionCelebration() {
+        this.showAchievement("🎉 Story Complete!", "Amazing reading! You finished the whole story!");
+        this.createConfetti();
+        this.createFloatingIcons('🎉');
+        this.readingScore += 100;
+        this.readingStreak += 5;
+        this.updateReadingStats();
+        
+        // Play success sound effect (if available)
+        this.playSuccessSound();
+    }
+
+    showAchievement(title, message) {
+        const popup = document.createElement('div');
+        popup.className = 'achievement-popup';
+        popup.innerHTML = `
+            <h3>${title}</h3>
+            <p>${message}</p>
+        `;
+        
+        document.body.appendChild(popup);
+        
+        setTimeout(() => {
+            popup.remove();
+        }, 3000);
+    }
+
+    createConfetti() {
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }, i * 100);
+        }
+    }
+
+    createFloatingIcons(icon) {
+        const storyContainer = document.querySelector('.story-content');
+        if (!storyContainer) return;
+        
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const floatingIcon = document.createElement('div');
+                floatingIcon.className = 'floating-icon';
+                floatingIcon.textContent = icon;
+                floatingIcon.style.left = Math.random() * 80 + '%';
+                floatingIcon.style.top = Math.random() * 80 + '%';
+                floatingIcon.style.animationDelay = Math.random() * 2 + 's';
+                
+                storyContainer.appendChild(floatingIcon);
+                
+                setTimeout(() => {
+                    floatingIcon.remove();
+                }, 4000);
+            }, i * 200);
+        }
+    }
+
+    playSuccessSound() {
+        // Create a simple beep sound using Web Audio API
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5 note
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        } catch (error) {
+            console.log('Audio not supported or user interaction required');
+        }
+    }
+
+    updateReadingStats() {
+        document.getElementById('words-read').textContent = this.wordsRead;
+        document.getElementById('reading-streak').textContent = this.readingStreak;
+        document.getElementById('reading-score').textContent = this.readingScore;
     }
 
     escapeHtml(text) {
