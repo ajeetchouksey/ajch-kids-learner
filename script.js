@@ -4,6 +4,11 @@ class StoryLearnerApp {
         this.stories = this.loadStoriesFromStorage();
         this.currentStory = null;
         this.highlightsEnabled = true;
+        this.isReadingMode = false;
+        this.currentWordIndex = 0;
+        this.wordsList = [];
+        this.readingTimer = null;
+        this.readingSpeed = 800; // milliseconds per word
         this.init();
     }
 
@@ -27,6 +32,14 @@ class StoryLearnerApp {
         // Reading controls
         document.getElementById('back-to-stories').addEventListener('click', () => this.showSection('stories'));
         document.getElementById('toggle-highlights').addEventListener('click', () => this.toggleHighlights());
+
+        // Word-by-word reading controls (will be added dynamically)
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'play-reading') this.toggleReading();
+            if (e.target.id === 'prev-word') this.previousWord();
+            if (e.target.id === 'next-word') this.nextWord();
+            if (e.target.id === 'reset-reading') this.resetReading();
+        });
 
         // Enter key support for form
         document.getElementById('story-title').addEventListener('keypress', (e) => {
@@ -309,12 +322,163 @@ class StoryLearnerApp {
             imageDisplay.innerHTML = '';
         }
 
-        // Display text with phonetic highlights
+        // Display text with phonetic highlights and word highlighting support
         const textDisplay = document.getElementById('story-text-display');
-        if (this.highlightsEnabled) {
-            textDisplay.innerHTML = this.highlightPhoneticBlends(story.text);
+        this.renderStoryText(story.text, textDisplay);
+        
+        // Add reading controls
+        this.addReadingControls();
+    }
+
+    renderStoryText(text, container) {
+        // Reset reading state
+        this.currentWordIndex = 0;
+        this.isReadingMode = false;
+        
+        // Split text into words while preserving spaces and punctuation
+        const parts = text.split(/(\s+)/);
+        this.wordsList = [];
+        let wordIndex = 0;
+        
+        const processedParts = parts.map(part => {
+            if (/\w/.test(part)) { // This part contains letters (is a word)
+                const wordId = `word-${wordIndex}`;
+                this.wordsList.push({ index: wordIndex, text: part, id: wordId });
+                
+                if (this.highlightsEnabled) {
+                    // Apply phonetic highlighting to the word
+                    const highlightedWord = this.highlightPhoneticBlends(part);
+                    wordIndex++;
+                    return `<span class="story-word" id="${wordId}">${highlightedWord}</span>`;
+                } else {
+                    wordIndex++;
+                    return `<span class="story-word" id="${wordId}">${this.escapeHtml(part)}</span>`;
+                }
+            } else {
+                // This is whitespace or punctuation, keep as is
+                return this.escapeHtml(part);
+            }
+        });
+        
+        container.innerHTML = processedParts.join('');
+    }
+
+    addReadingControls() {
+        const readingContainer = document.querySelector('.reading-container');
+        
+        // Check if controls already exist
+        if (document.getElementById('word-reading-controls')) {
+            return;
+        }
+        
+        const controlsHTML = `
+            <div id="word-reading-controls" class="word-reading-controls">
+                <h3>🎯 Word-by-Word Reading:</h3>
+                <div class="reading-buttons">
+                    <button id="play-reading" class="reading-btn">▶️ Start Reading</button>
+                    <button id="prev-word" class="reading-btn">⬅️ Previous</button>
+                    <button id="next-word" class="reading-btn">➡️ Next</button>
+                    <button id="reset-reading" class="reading-btn">🔄 Reset</button>
+                </div>
+                <div class="reading-progress">
+                    <span id="word-counter">Word 1 of ${this.wordsList.length}</span>
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Insert before the existing reading controls
+        const existingControls = document.querySelector('.reading-controls');
+        existingControls.insertAdjacentHTML('beforebegin', controlsHTML);
+        
+        this.updateWordCounter();
+    }
+
+    toggleReading() {
+        const playBtn = document.getElementById('play-reading');
+        
+        if (this.isReadingMode) {
+            // Stop reading
+            this.stopReading();
+            playBtn.textContent = '▶️ Start Reading';
         } else {
-            textDisplay.textContent = story.text;
+            // Start reading
+            this.startReading();
+            playBtn.textContent = '⏸️ Pause Reading';
+        }
+    }
+
+    startReading() {
+        this.isReadingMode = true;
+        this.readingTimer = setInterval(() => {
+            this.nextWord();
+        }, this.readingSpeed);
+        this.highlightCurrentWord();
+    }
+
+    stopReading() {
+        this.isReadingMode = false;
+        if (this.readingTimer) {
+            clearInterval(this.readingTimer);
+            this.readingTimer = null;
+        }
+    }
+
+    nextWord() {
+        if (this.currentWordIndex < this.wordsList.length - 1) {
+            this.currentWordIndex++;
+            this.highlightCurrentWord();
+            this.updateWordCounter();
+        } else {
+            // Reached end of story
+            this.stopReading();
+            document.getElementById('play-reading').textContent = '▶️ Start Reading';
+        }
+    }
+
+    previousWord() {
+        if (this.currentWordIndex > 0) {
+            this.currentWordIndex--;
+            this.highlightCurrentWord();
+            this.updateWordCounter();
+        }
+    }
+
+    resetReading() {
+        this.stopReading();
+        this.currentWordIndex = 0;
+        this.highlightCurrentWord();
+        this.updateWordCounter();
+        document.getElementById('play-reading').textContent = '▶️ Start Reading';
+    }
+
+    highlightCurrentWord() {
+        // Remove previous highlighting
+        document.querySelectorAll('.story-word').forEach(word => {
+            word.classList.remove('current-word');
+        });
+        
+        // Highlight current word
+        if (this.wordsList[this.currentWordIndex]) {
+            const currentWordElement = document.getElementById(this.wordsList[this.currentWordIndex].id);
+            if (currentWordElement) {
+                currentWordElement.classList.add('current-word');
+                // Scroll into view if needed
+                currentWordElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }
+
+    updateWordCounter() {
+        const counter = document.getElementById('word-counter');
+        const progressFill = document.getElementById('progress-fill');
+        
+        if (counter && progressFill) {
+            counter.textContent = `Word ${this.currentWordIndex + 1} of ${this.wordsList.length}`;
+            const progress = ((this.currentWordIndex + 1) / this.wordsList.length) * 100;
+            progressFill.style.width = `${progress}%`;
         }
     }
 
