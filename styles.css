@@ -354,6 +354,96 @@ header p {
     position: relative;
 }
 
+/* Word-by-Word Reading */
+.story-word {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    padding: 1px 2px;
+}
+
+.story-word:hover {
+    background-color: rgba(74, 144, 226, 0.1);
+}
+
+.story-word.current-word {
+    background: linear-gradient(120deg, #ff6b9d 0%, #c44569 100%);
+    color: white;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
+    transform: scale(1.05);
+}
+
+/* Word Reading Controls */
+.word-reading-controls {
+    background: #e8f4fd;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #b8e0ff;
+    margin-bottom: 20px;
+}
+
+.word-reading-controls h3 {
+    color: #2c5aa0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.reading-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.reading-btn {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.reading-btn:hover {
+    background: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+}
+
+.reading-progress {
+    text-align: center;
+}
+
+#word-counter {
+    display: block;
+    color: #2c5aa0;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
 /* Reading Controls */
 .reading-controls {
     background: #f0f8ff;
