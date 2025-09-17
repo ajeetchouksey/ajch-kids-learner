@@ -32,6 +32,10 @@
                         <label for="story-image">📸 Add Story Image (optional):</label>
                         <input type="file" id="story-image" accept="image/*">
                         <div id="image-preview"></div>
+                        <button type="button" id="extract-text-btn" class="btn-secondary" style="display: none; margin-top: 10px;">
+                            🔍 Extract Text from Image
+                        </button>
+                        <div id="ocr-status" class="ocr-status"></div>
                     </div>
                     
                     <button id="save-story" class="btn-primary">💾 Save Story</button>
@@ -76,6 +80,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

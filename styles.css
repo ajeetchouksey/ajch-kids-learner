@@ -150,6 +150,37 @@ header p {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* OCR Status */
+.ocr-status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+}
+
+.ocr-status.processing {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 2px solid #90caf9;
+    display: block;
+}
+
+.ocr-status.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border: 2px solid #a5d6a7;
+    display: block;
+}
+
+.ocr-status.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 2px solid #ef9a9a;
+    display: block;
+}
+
 /* Buttons */
 .btn-primary, .btn-secondary {
     padding: 15px 30px;

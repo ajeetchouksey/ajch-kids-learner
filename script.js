@@ -22,6 +22,7 @@ class StoryLearnerApp {
         // Upload form
         document.getElementById('save-story').addEventListener('click', () => this.saveStory());
         document.getElementById('story-image').addEventListener('change', (e) => this.previewImage(e));
+        document.getElementById('extract-text-btn').addEventListener('click', () => this.extractTextFromImage());
 
         // Reading controls
         document.getElementById('back-to-stories').addEventListener('click', () => this.showSection('stories'));
@@ -57,15 +58,134 @@ class StoryLearnerApp {
     previewImage(event) {
         const file = event.target.files[0];
         const preview = document.getElementById('image-preview');
+        const extractBtn = document.getElementById('extract-text-btn');
+        const ocrStatus = document.getElementById('ocr-status');
         
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 preview.innerHTML = `<img src="${e.target.result}" alt="Story preview">`;
+                extractBtn.style.display = 'inline-block';
             };
             reader.readAsDataURL(file);
         } else {
             preview.innerHTML = '';
+            extractBtn.style.display = 'none';
+            ocrStatus.style.display = 'none';
+        }
+    }
+
+    async extractTextFromImage() {
+        const imageInput = document.getElementById('story-image');
+        const ocrStatus = document.getElementById('ocr-status');
+        const storyTextArea = document.getElementById('story-text');
+        
+        if (!imageInput.files[0]) {
+            this.showMessage('Please upload an image first!', 'error');
+            return;
+        }
+
+        // Show processing status
+        ocrStatus.className = 'ocr-status processing';
+        ocrStatus.textContent = '🔍 Extracting text from image...';
+
+        try {
+            const file = imageInput.files[0];
+            
+            // Check if Tesseract is available
+            if (typeof Tesseract !== 'undefined') {
+                // Use Tesseract.js to extract text
+                const { data: { text } } = await Tesseract.recognize(
+                    file,
+                    'eng',
+                    {
+                        logger: m => {
+                            if (m.status === 'recognizing text') {
+                                const progress = Math.round(m.progress * 100);
+                                ocrStatus.textContent = `🔍 Extracting text... ${progress}%`;
+                            }
+                        }
+                    }
+                );
+                
+                if (text.trim()) {
+                    // Clean up the extracted text
+                    const cleanedText = text.trim().replace(/\n\s*\n/g, '\n\n');
+                    
+                    // Ask user if they want to replace existing text
+                    const currentText = storyTextArea.value.trim();
+                    let shouldReplace = true;
+                    
+                    if (currentText) {
+                        shouldReplace = confirm(
+                            'This will replace the existing story text. Do you want to continue?'
+                        );
+                    }
+                    
+                    if (shouldReplace) {
+                        storyTextArea.value = cleanedText;
+                        ocrStatus.className = 'ocr-status success';
+                        ocrStatus.textContent = '✅ Text extracted successfully!';
+                        
+                        // Auto-hide success message after 3 seconds
+                        setTimeout(() => {
+                            ocrStatus.style.display = 'none';
+                        }, 3000);
+                    } else {
+                        ocrStatus.style.display = 'none';
+                    }
+                } else {
+                    throw new Error('No text found in the image');
+                }
+            } else {
+                // Fallback: Show demo message when Tesseract is not available
+                ocrStatus.className = 'ocr-status error';
+                ocrStatus.textContent = '❌ OCR library not loaded. Please check your internet connection.';
+                
+                // For demonstration, show what would happen with sample text
+                setTimeout(() => {
+                    const shouldDemo = confirm(
+                        'OCR library is not available. Would you like to see a demo with sample text?'
+                    );
+                    
+                    if (shouldDemo) {
+                        const sampleText = `Once upon a time, there was a little girl who loved to read stories. She would spend hours with her books, learning new words and discovering magical worlds.`;
+                        
+                        const currentText = storyTextArea.value.trim();
+                        let shouldReplace = true;
+                        
+                        if (currentText) {
+                            shouldReplace = confirm(
+                                'This will replace the existing story text with demo text. Do you want to continue?'
+                            );
+                        }
+                        
+                        if (shouldReplace) {
+                            storyTextArea.value = sampleText;
+                            ocrStatus.className = 'ocr-status success';
+                            ocrStatus.textContent = '✅ Demo text added! (In real usage, this would be extracted from your image)';
+                            
+                            setTimeout(() => {
+                                ocrStatus.style.display = 'none';
+                            }, 5000);
+                        } else {
+                            ocrStatus.style.display = 'none';
+                        }
+                    } else {
+                        ocrStatus.style.display = 'none';
+                    }
+                }, 1000);
+            }
+            
+        } catch (error) {
+            console.error('OCR Error:', error);
+            ocrStatus.className = 'ocr-status error';
+            ocrStatus.textContent = '❌ Failed to extract text. Please try a clearer image.';
+            
+            // Auto-hide error message after 5 seconds
+            setTimeout(() => {
+                ocrStatus.style.display = 'none';
+            }, 5000);
         }
     }
 
@@ -119,6 +239,8 @@ class StoryLearnerApp {
         document.getElementById('story-text').value = '';
         document.getElementById('story-image').value = '';
         document.getElementById('image-preview').innerHTML = '';
+        document.getElementById('extract-text-btn').style.display = 'none';
+        document.getElementById('ocr-status').style.display = 'none';
     }
 
     loadStoriesList() {
