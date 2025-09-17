@@ -68,11 +68,64 @@
                 </div>
                 
                 <div class="reading-controls">
+                    <div class="interactive-reading">
+                        <div class="reading-mode-controls">
+                            <h3>🎯 Reading Mode:</h3>
+                            <div class="mode-buttons">
+                                <button id="normal-reading" class="mode-btn active">📖 Normal</button>
+                                <button id="guided-reading" class="mode-btn">✨ Guided</button>
+                                <button id="auto-reading" class="mode-btn">🤖 Auto Read</button>
+                            </div>
+                        </div>
+                        
+                        <div class="playback-controls" style="display: none;">
+                            <div class="control-buttons">
+                                <button id="play-pause-btn" class="control-btn">▶️ Play</button>
+                                <button id="prev-word-btn" class="control-btn">⏮️ Previous</button>
+                                <button id="next-word-btn" class="control-btn">⏭️ Next</button>
+                            </div>
+                            <div class="speed-control">
+                                <label for="reading-speed">Speed:</label>
+                                <input type="range" id="reading-speed" min="1" max="5" value="3" step="1">
+                                <span id="speed-display">Normal</span>
+                            </div>
+                        </div>
+                        
+                        <div class="reading-progress">
+                            <div class="progress-info">
+                                <span id="current-word">0</span> / <span id="total-words">0</span> words
+                                <span class="reading-time">⏱️ <span id="reading-time">00:00</span></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="progress-fill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="reading-stats">
+                            <h4>🎯 Reading Stats</h4>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-value" id="words-read">0</div>
+                                    <div class="stat-label">Words Read</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="reading-streak">1</div>
+                                    <div class="stat-label">Streak</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" id="reading-score">0</div>
+                                    <div class="stat-label">Score</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="blend-legend">
                         <h3>📚 Phonetic Blends:</h3>
                         <div class="legend-items">
                             <span class="legend-item"><span class="highlight-start">st</span> Starting Blends</span>
                             <span class="legend-item"><span class="highlight-end">ing</span> Ending Blends</span>
+                            <span class="legend-item"><span class="current-word-highlight">word</span> Current Word</span>
                         </div>
                     </div>
                 </div>
