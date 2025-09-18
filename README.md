@@ -51,12 +51,47 @@ The app comes with sample stories to demonstrate the functionality:
 - **Responsive**: CSS Grid and Flexbox
 - **No Dependencies**: Pure vanilla JavaScript implementation with optional OCR enhancement
 
+## AI/ML Capabilities
+
+The Kids Story Learner application has significant potential for AI and Machine Learning enhancements. We've analyzed the current implementation and identified numerous opportunities to enhance the learning experience:
+
+### 🤖 **Current AI Features**
+- **OCR Text Extraction**: Tesseract.js for converting images to text
+- **Phonetic Pattern Recognition**: Rule-based highlighting of reading blends
+
+### 🚀 **Potential AI Enhancements**
+- **Text-to-Speech**: Natural voice reading with word highlighting
+- **Reading Level Assessment**: Automatic difficulty analysis and grading
+- **Personalized Learning**: Adaptive recommendations based on progress
+- **Enhanced OCR**: AI-powered text detection and correction
+- **Vocabulary Analysis**: Smart word difficulty identification
+- **Learning Analytics**: Progress tracking and insights
+
+### 📚 **Documentation**
+- [**AI/ML Capabilities Overview**](AI_ML_CAPABILITIES.md) - Comprehensive analysis of potential features
+- [**Implementation Guide**](IMPLEMENTATION_GUIDE.md) - Step-by-step integration instructions
+- [**AI Features Summary**](AI_ML_SUMMARY.md) - Executive summary and roadmap
+- [**Live Demo**](examples/ai-demo.html) - Interactive demonstration of AI features
+
+### 🎮 **Try the AI Demo**
+See the potential AI features in action by opening [`examples/ai-demo.html`](examples/ai-demo.html) in your browser. The demo showcases:
+- Text-to-Speech with customizable speed and pitch
+- Real-time reading level analysis
+- Enhanced phonetic highlighting
+- Learning analytics dashboard
+
 ## File Structure
 
 ```
-├── index.html          # Main application page
-├── styles.css          # Styling and responsive design
-├── script.js           # Application logic and functionality
-├── README.md           # Documentation
-└── .gitignore          # Git ignore rules
+├── index.html              # Main application page
+├── styles.css              # Styling and responsive design
+├── script.js               # Application logic and functionality
+├── README.md               # Documentation
+├── .gitignore              # Git ignore rules
+├── AI_ML_CAPABILITIES.md   # Detailed AI/ML feature analysis
+├── AI_ML_SUMMARY.md        # Executive summary of AI capabilities
+├── IMPLEMENTATION_GUIDE.md # Step-by-step AI integration guide
+└── examples/
+    ├── ai-demo.html        # Interactive AI features demonstration
+    └── ai-features-demo.js # Complete AI implementation examples
 ```
