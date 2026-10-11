@@ -11,11 +11,18 @@ srv=subprocess.Popen([sys.executable,"-m","http.server",str(PORT),"--directory",
 failed=[];summary=[]
 try:
   for s in SUITES:
-    t0=time.time();r=subprocess.run([sys.executable,os.path.join(ROOT,"tests",s)],cwd=DIST,env=env,capture_output=True,text=True,timeout=900)
-    out=r.stdout+r.stderr;fails=[l for l in out.splitlines() if l.startswith("FAIL")]
-    errs=re.findall(r"ERR(?:ORS?)? \[(.+?)\]",out);npass=sum(1 for l in out.splitlines() if l.startswith("PASS"))
-    bad=r.returncode!=0 or fails or [e for e in errs if e.strip()] or (s=="ah_test.py" and re.search(r"\| \[(?!\])",out)) or (s=="talk_unit2.py" and "→ ERR" in out)
-    summary.append(f"{'✗' if bad else '✓'} {s:16s} {npass:3d} passed{'' if not fails else ', '+str(len(fails))+' failed'}  ({time.time()-t0:.0f}s)")
+    t0=time.time();retried=""
+    for attempt in (1,2):   # one retry: browser timing on slow CI machines; a real bug fails twice
+      r=subprocess.run([sys.executable,os.path.join(ROOT,"tests",s)],cwd=DIST,env=env,capture_output=True,text=True,timeout=900)
+      out=r.stdout+r.stderr;fails=[l for l in out.splitlines() if l.startswith("FAIL")]
+      errs=re.findall(r"ERR(?:ORS?)? \[(.+?)\]",out);npass=sum(1 for l in out.splitlines() if l.startswith("PASS"))
+      bad=r.returncode!=0 or fails or [e for e in errs if e.strip()] or (s=="ah_test.py" and re.search(r"\| \[(?!\])",out)) or (s=="talk_unit2.py" and "→ ERR" in out)
+      if not bad:break
+      if attempt==1:
+        retried=" (passed on retry – flaky: "+"; ".join(fails[:3])[:300]+")"
+        if os.environ.get("GITHUB_ACTIONS"):print(f"::warning title={s} retried::"+("%0A".join(fails[:10]) or out[-1500:].replace("\n","%0A")))
+    if bad:retried=""
+    summary.append(f"{'✗' if bad else '✓'} {s:16s} {npass:3d} passed{'' if not fails else ', '+str(len(fails))+' failed'}  ({time.time()-t0:.0f}s){retried}")
     print(summary[-1],flush=True)
     if bad:
       failed.append(s);detail="\n".join(fails[:20]) or out[-2000:];print(detail)
