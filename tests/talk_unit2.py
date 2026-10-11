@@ -1,3 +1,4 @@
+import os
 from playwright.sync_api import sync_playwright
 T={"en":{0:["My name is Aarya.","me name is Aarya","Aarya","i am Aarya","my name Aarya"],
  1:["I am six years old","i have six years","six","i am six","I'm 6"],
@@ -39,7 +40,7 @@ with sync_playwright() as p:
   b=p.chromium.launch();pg=b.new_page();errs=[]
   pg.on("pageerror",lambda e:errs.append(str(e)))
   pg.add_init_script("localStorage.setItem('aaryaai-profile',JSON.stringify({name:'Aarya',gender:'f',grade:1,enLevel:1,created:'2026-09-01'}))")
-  pg.goto("file:///tmp/claude-0/-home-claude/cd893b8d-2513-5015-a160-25cbff4c1cab/scratchpad/combo/AaryaAI.html");pg.wait_for_timeout(800)
+  pg.goto(os.environ.get("URL","http://localhost:8765/AaryaAI.html"));pg.wait_for_timeout(800)
   for L,d in T.items():
     for i,ans in d.items():
       q=pg.evaluate(f"TALK.Q.{L}[{i}].q");print(f"\n## {L}{i} {q}")

@@ -1,0 +1,14 @@
+{
+  "name": "aaryaai-kids",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AaryaAI – offline learning app for Klasse 1 (Deutsch, Mathe, English, Hindi, Marathi)",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "validate": "node scripts/validate-content.mjs",
+    "build": "node scripts/validate-content.mjs && node scripts/build.mjs",
+    "serve": "python3 -m http.server 8765 --directory dist",
+    "test": "python3 tests/run_all.py"
+  }
+}

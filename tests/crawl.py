@@ -1,4 +1,4 @@
-import re,json,sys
+import re,json,sys,os
 from playwright.sync_api import sync_playwright
 DE_W=set("und ist nicht ich du der die das ein eine einen mit für auf zum zur noch nochmal tippe tipp weiter fertig heute los richtig falsch sehr gut super toll sterne punkte schreib schreibe sag sage hör höre lies wie wer wo warum welche welches dein deine mein meine wir sind hast hat habe kannst kann alle aufgabe aufgaben wörter wort satz sätze spiel spiele zurück zeit stufe ziel ziele eltern lesen heft fertig! geschafft schau schaue zähle zähl finde hilfe frage fragen antwort antworten mal bitte jetzt dann oder auch nur noch".split())
 EN_W=set("the and is are you your tap to of for with again next finish great well done read write say listen look find help question questions answer answers word words sentence play game games back time level goal goals parents today right wrong try good job let's it this that what who where why which my we have has can all stars points start continue nearly perfect check correct one two three more less big small first last here there now then when how many much very just out up down day days week best score mode quiz build memory silly think learn speak notebook settings sound voice speed slow fast reset load save file open close yes no not only also because but from into new old show hide words long short girl boy name names numbers count add take away plus minus equals tens ones hundred what's don't can't won't i'm it's".split())
@@ -33,7 +33,7 @@ def run(app):
     b=p.chromium.launch();pg=b.new_page(viewport={"width":390,"height":844})
     pg.on("pageerror",lambda e:errs.append(f"[{app}] pageerror {e}"))
     pg.add_init_script("localStorage.setItem('aaryaai-profile',JSON.stringify({name:'Aarya',gender:'f',grade:1,enLevel:1,uiLang:'%s',created:'2026-09-01'}));speechSynthesis.speak=()=>{};"%app)
-    pg.goto("file:///tmp/claude-0/-home-claude/cd893b8d-2513-5015-a160-25cbff4c1cab/scratchpad/combo/AaryaAI.html");pg.wait_for_timeout(700)
+    pg.goto(os.environ.get("URL","http://localhost:8765/AaryaAI.html"));pg.wait_for_timeout(700)
     W=lambda ms=150:pg.wait_for_timeout(ms)
     # shared screens
     for v in ["today","awards","brain"]:

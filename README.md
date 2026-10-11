@@ -1,19 +1,31 @@
 # AaryaAI – Lernwelt für Klasse 1
 
-An offline, single-file learning app for children in Klasse 1 at a German Grundschule.
-**Live:** https://ajeetchouksey.github.io/ajch-kids-learner/ — or download `index.html` and open it in Chrome or Edge – no install, no server, no account. Everything stays in the browser.
+A learning app for children in Klasse 1 at a German Grundschule: **Deutsch · Mathe · English · हिंदी · मराठी · Training · Heft-Zeit**.
+Learning comes first: a daily **Lernplan** (read a story and answer questions, spell words, write one sentence in the notebook, one maths round with typed answers) unlocks the games.
 
-**Areas:** Deutsch · Mathe (incl. "Denken und Rechnen" Arbeitsheft) · English · हिंदी / मराठी (native voices, 31 graded lessons each, letter tracing) · Training · Heft-Zeit (notebook work)
+- Works offline, installable on phone and laptop (PWA), asks before updating.
+- No account, no server data: progress stays in the child's browser (+ optional save file).
+- Hindi and Marathi only spoken with native voices.
 
-**Learning first:** a daily Lernplan – read a story and answer questions, spell words from letter tiles, write one sentence in the notebook (parent checklist), one maths round with typed answers. Games unlock afterwards (parents can change this).
+## Use it
+- **Online:** the Cloudflare URL (see *Deploy*), then "Add to Home Screen".
+- **Offline:** download `AaryaAI.html` from the latest build and open it in Chrome or Edge.
 
-## Source
-`src/combo/build.py` builds the app from the files in `src/`:
+## Develop
 ```bash
-cd src/combo && python3 build.py   # → AaryaAI.html (offline) and aaryaai.html
+npm run build      # validate content + build → dist/
+npm run serve      # http://localhost:8765
+pip install playwright && python -m playwright install chromium
+npm test           # all Playwright suites against dist/
 ```
-Tests (Playwright, Chromium) live in `src/combo/*_test.py`; run them over http (`python3 -m http.server 8765`).
+Edit texts, spelling words and writing prompts in `content/learn/*.json` – the validator explains any mistake.
+
+## Deploy
+Every push to `main` is validated, built, tested and deployed to **Cloudflare**; pull requests get a preview URL.
+One-time setup: add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as GitHub Actions secrets – details in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#6-hosting--cloudflare).
+
+## Architecture
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) – overview diagram, build, runtime, hosting, quality gates and the phase 2/3 roadmap.
+
 Fonts: Andika, Fredoka, Noto Sans Devanagari (SIL Open Font License).
-
-
-_The earlier "Kids Story Learner" app was replaced by AaryaAI; it is still in the git history (commit a9fa437)._
+_The earlier "Kids Story Learner" app is in the git history (commit a9fa437)._

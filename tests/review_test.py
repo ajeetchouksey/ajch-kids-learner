@@ -1,6 +1,7 @@
+import os
 import asyncio,pathlib,json
 from playwright.async_api import async_playwright
-F="file://"+str(pathlib.Path("AaryaAI.html").resolve())
+F=os.environ.get("URL","http://localhost:8765/AaryaAI.html")
 MOCK="""localStorage.getItem('aarya-plan-v1')||localStorage.setItem('aarya-plan-v1',JSON.stringify({opt:{gate:false,pause:false,type:false}}));window.__file=null;const mk=(n,c)=>({name:n,kind:'file',queryPermission:async()=>'granted',requestPermission:async()=>'granted',
  createWritable:async()=>{let b='';return {write:async d=>{b+=d},close:async()=>{window.__file=b}}},getFile:async()=>({size:(c||window.__file||'').length,text:async()=>c||window.__file||''})});
 window.__existing=null;window.showSaveFilePicker=async o=>mk(o.suggestedName,window.__existing);window.showOpenFilePicker=async()=>[mk('x.json',window.__existing)];"""

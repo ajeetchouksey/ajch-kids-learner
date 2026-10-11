@@ -1,0 +1,384 @@
+{
+ "de": [
+  [
+   {
+    "word": "Ei",
+    "emoji": "🥚",
+    "article": "das"
+   },
+   {
+    "word": "Uhr",
+    "emoji": "⌚",
+    "article": "die"
+   },
+   {
+    "word": "Oma",
+    "emoji": "👵",
+    "article": "die"
+   },
+   {
+    "word": "Opa",
+    "emoji": "👴",
+    "article": "der"
+   },
+   {
+    "word": "Eis",
+    "emoji": "🍦",
+    "article": "das"
+   },
+   {
+    "word": "Kuh",
+    "emoji": "🐮",
+    "article": "die"
+   },
+   {
+    "word": "Hund",
+    "emoji": "🐶",
+    "article": "der"
+   },
+   {
+    "word": "Maus",
+    "emoji": "🐭",
+    "article": "die"
+   },
+   {
+    "word": "Ball",
+    "emoji": "⚽",
+    "article": "der"
+   },
+   {
+    "word": "Haus",
+    "emoji": "🏠",
+    "article": "das"
+   },
+   {
+    "word": "Baum",
+    "emoji": "🌳",
+    "article": "der"
+   },
+   {
+    "word": "Mond",
+    "emoji": "🌙",
+    "article": "der"
+   },
+   {
+    "word": "Hase",
+    "emoji": "🐰",
+    "article": "der"
+   },
+   {
+    "word": "Nase",
+    "emoji": "👃",
+    "article": "die"
+   },
+   {
+    "word": "Rose",
+    "emoji": "🌹",
+    "article": "die"
+   },
+   {
+    "word": "Igel",
+    "emoji": "🦔",
+    "article": "der"
+   },
+   {
+    "word": "Buch",
+    "emoji": "📖",
+    "article": "das"
+   },
+   {
+    "word": "Brot",
+    "emoji": "🍞",
+    "article": "das"
+   },
+   {
+    "word": "Ente",
+    "emoji": "🦆",
+    "article": "die"
+   },
+   {
+    "word": "Auto",
+    "emoji": "🚗",
+    "article": "das"
+   }
+  ],
+  [
+   {
+    "word": "Katze",
+    "emoji": "🐱",
+    "article": "die"
+   },
+   {
+    "word": "Sonne",
+    "emoji": "☀️",
+    "article": "die"
+   },
+   {
+    "word": "Blume",
+    "emoji": "🌸",
+    "article": "die"
+   },
+   {
+    "word": "Apfel",
+    "emoji": "🍎",
+    "article": "der"
+   },
+   {
+    "word": "Fisch",
+    "emoji": "🐟",
+    "article": "der"
+   },
+   {
+    "word": "Vogel",
+    "emoji": "🐦",
+    "article": "der"
+   },
+   {
+    "word": "Tiger",
+    "emoji": "🐯",
+    "article": "der"
+   },
+   {
+    "word": "Zebra",
+    "emoji": "🦓",
+    "article": "das"
+   },
+   {
+    "word": "Pferd",
+    "emoji": "🐴",
+    "article": "das"
+   },
+   {
+    "word": "Stern",
+    "emoji": "⭐",
+    "article": "der"
+   },
+   {
+    "word": "Schiff",
+    "emoji": "🚢",
+    "article": "das"
+   },
+   {
+    "word": "Banane",
+    "emoji": "🍌",
+    "article": "die"
+   },
+   {
+    "word": "Tomate",
+    "emoji": "🍅",
+    "article": "die"
+   },
+   {
+    "word": "Löwe",
+    "emoji": "🦁",
+    "article": "der"
+   },
+   {
+    "word": "Hand",
+    "emoji": "✋",
+    "article": "die"
+   },
+   {
+    "word": "Bett",
+    "emoji": "🛏️",
+    "article": "das"
+   }
+  ],
+  [
+   {
+    "word": "Schwein",
+    "emoji": "🐷",
+    "article": "das"
+   },
+   {
+    "word": "Giraffe",
+    "emoji": "🦒",
+    "article": "die"
+   },
+   {
+    "word": "Elefant",
+    "emoji": "🐘",
+    "article": "der"
+   },
+   {
+    "word": "Pinguin",
+    "emoji": "🐧",
+    "article": "der"
+   },
+   {
+    "word": "Krokodil",
+    "emoji": "🐊",
+    "article": "das"
+   },
+   {
+    "word": "Fahrrad",
+    "emoji": "🚲",
+    "article": "das"
+   },
+   {
+    "word": "Flugzeug",
+    "emoji": "✈️",
+    "article": "das"
+   },
+   {
+    "word": "Ananas",
+    "emoji": "🍍",
+    "article": "die"
+   },
+   {
+    "word": "Schnecke",
+    "emoji": "🐌",
+    "article": "die"
+   },
+   {
+    "word": "Kuchen",
+    "emoji": "🍰",
+    "article": "der"
+   }
+  ]
+ ],
+ "en": [
+  [
+   {
+    "word": "cat",
+    "emoji": "🐱"
+   },
+   {
+    "word": "dog",
+    "emoji": "🐶"
+   },
+   {
+    "word": "sun",
+    "emoji": "☀️"
+   },
+   {
+    "word": "bus",
+    "emoji": "🚌"
+   },
+   {
+    "word": "hat",
+    "emoji": "🎩"
+   },
+   {
+    "word": "pig",
+    "emoji": "🐷"
+   },
+   {
+    "word": "cup",
+    "emoji": "☕"
+   },
+   {
+    "word": "bed",
+    "emoji": "🛏️"
+   },
+   {
+    "word": "egg",
+    "emoji": "🥚"
+   },
+   {
+    "word": "fish",
+    "emoji": "🐟"
+   },
+   {
+    "word": "cow",
+    "emoji": "🐮"
+   },
+   {
+    "word": "box",
+    "emoji": "📦"
+   }
+  ],
+  [
+   {
+    "word": "apple",
+    "emoji": "🍎"
+   },
+   {
+    "word": "house",
+    "emoji": "🏠"
+   },
+   {
+    "word": "tree",
+    "emoji": "🌳"
+   },
+   {
+    "word": "ball",
+    "emoji": "⚽"
+   },
+   {
+    "word": "frog",
+    "emoji": "🐸"
+   },
+   {
+    "word": "duck",
+    "emoji": "🦆"
+   },
+   {
+    "word": "book",
+    "emoji": "📖"
+   },
+   {
+    "word": "star",
+    "emoji": "⭐"
+   },
+   {
+    "word": "cake",
+    "emoji": "🍰"
+   },
+   {
+    "word": "milk",
+    "emoji": "🥛"
+   },
+   {
+    "word": "moon",
+    "emoji": "🌙"
+   },
+   {
+    "word": "bird",
+    "emoji": "🐦"
+   }
+  ],
+  [
+   {
+    "word": "horse",
+    "emoji": "🐴"
+   },
+   {
+    "word": "mouse",
+    "emoji": "🐭"
+   },
+   {
+    "word": "train",
+    "emoji": "🚆"
+   },
+   {
+    "word": "chair",
+    "emoji": "🪑"
+   },
+   {
+    "word": "flower",
+    "emoji": "🌸"
+   },
+   {
+    "word": "rabbit",
+    "emoji": "🐰"
+   },
+   {
+    "word": "banana",
+    "emoji": "🍌"
+   },
+   {
+    "word": "pencil",
+    "emoji": "✏️"
+   },
+   {
+    "word": "snake",
+    "emoji": "🐍"
+   },
+   {
+    "word": "sheep",
+    "emoji": "🐑"
+   }
+  ]
+ ]
+}

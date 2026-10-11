@@ -1,0 +1,106 @@
+{
+ "de": [
+  {
+   "emoji": "🐶⚽",
+   "prompt": "Was macht der Hund?",
+   "model": "Der Hund spielt mit dem Ball."
+  },
+  {
+   "emoji": "🐱🥛",
+   "prompt": "Was trinkt die Katze?",
+   "model": "Die Katze trinkt Milch."
+  },
+  {
+   "emoji": "👧🎨",
+   "prompt": "Was macht das Mädchen?",
+   "model": "Das Mädchen malt ein Bild."
+  },
+  {
+   "emoji": "☀️🌳",
+   "prompt": "Wie ist das Wetter?",
+   "model": "Die Sonne scheint."
+  },
+  {
+   "emoji": "🍎🧺",
+   "prompt": "Was ist im Korb?",
+   "model": "Im Korb ist ein Apfel."
+  },
+  {
+   "emoji": "🐟🌊",
+   "prompt": "Wo schwimmt der Fisch?",
+   "model": "Der Fisch schwimmt im Wasser."
+  },
+  {
+   "emoji": "👦🚲",
+   "prompt": "Was macht der Junge?",
+   "model": "Der Junge fährt Fahrrad."
+  },
+  {
+   "emoji": "🐦🌳",
+   "prompt": "Wo sitzt der Vogel?",
+   "model": "Der Vogel sitzt auf dem Baum."
+  },
+  {
+   "emoji": "🤸",
+   "prompt": "Was machst du gern?",
+   "model": "Ich turne gern."
+  },
+  {
+   "emoji": "🎂🎁",
+   "prompt": "Was gibt es beim Geburtstag?",
+   "model": "Es gibt einen Kuchen."
+  },
+  {
+   "emoji": "🌧️☂️",
+   "prompt": "Was brauchst du bei Regen?",
+   "model": "Ich brauche einen Schirm."
+  },
+  {
+   "emoji": "🐘💧",
+   "prompt": "Was macht der Elefant?",
+   "model": "Der Elefant trinkt Wasser."
+  }
+ ],
+ "en": [
+  {
+   "emoji": "🐶",
+   "prompt": "I have a …",
+   "model": "I have a dog."
+  },
+  {
+   "emoji": "🍎",
+   "prompt": "I like …",
+   "model": "I like apples."
+  },
+  {
+   "emoji": "⚽🔴",
+   "prompt": "The ball is …",
+   "model": "The ball is red."
+  },
+  {
+   "emoji": "🐱",
+   "prompt": "The cat is …",
+   "model": "The cat is small."
+  },
+  {
+   "emoji": "☀️",
+   "prompt": "The sun is …",
+   "model": "The sun is hot."
+  },
+  {
+   "emoji": "🍕",
+   "prompt": "I eat …",
+   "model": "I eat pizza."
+  },
+  {
+   "emoji": "🐸",
+   "prompt": "The frog is …",
+   "model": "The frog is green."
+  },
+  {
+   "emoji": "🤸",
+   "prompt": "I can …",
+   "model": "I can jump."
+  }
+ ]
+}

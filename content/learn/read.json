@@ -1,0 +1,782 @@
+{
+ "de": [
+  {
+   "id": "bello",
+   "level": 0,
+   "emoji": "🐶",
+   "title": "Der Hund Bello",
+   "lines": [
+    "Bello ist ein Hund.",
+    "Er ist braun und klein.",
+    "Bello spielt gern mit dem Ball.",
+    "Am Abend schläft er in seinem Korb."
+   ],
+   "questions": [
+    {
+     "q": "Wie heißt der Hund?",
+     "answer": "Bello",
+     "wrong": [
+      "Bruno",
+      "Max"
+     ],
+     "line": 0
+    },
+    {
+     "q": "Welche Farbe hat Bello?",
+     "answer": "braun",
+     "wrong": [
+      "schwarz",
+      "weiß"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Womit spielt Bello gern?",
+     "answer": "mit dem Ball",
+     "wrong": [
+      "mit der Katze",
+      "mit dem Stock"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Wo schläft Bello?",
+     "answer": "im Korb",
+     "wrong": [
+      "im Bett",
+      "im Garten"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "garten",
+   "level": 0,
+   "emoji": "🌻",
+   "title": "Im Garten",
+   "lines": [
+    "Mia ist im Garten.",
+    "Sie gießt die Blumen.",
+    "Die Sonne scheint.",
+    "Ein Vogel singt im Baum."
+   ],
+   "questions": [
+    {
+     "q": "Wer ist im Garten?",
+     "answer": "Mia",
+     "wrong": [
+      "Tom",
+      "Oma"
+     ],
+     "line": 0
+    },
+    {
+     "q": "Was gießt Mia?",
+     "answer": "die Blumen",
+     "wrong": [
+      "den Baum",
+      "den Hund"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Wie ist das Wetter?",
+     "answer": "Die Sonne scheint.",
+     "wrong": [
+      "Es regnet.",
+      "Es schneit."
+     ],
+     "line": 2
+    },
+    {
+     "q": "Wo singt der Vogel?",
+     "answer": "im Baum",
+     "wrong": [
+      "auf dem Dach",
+      "im Haus"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "apfel",
+   "level": 0,
+   "emoji": "🍎",
+   "title": "Der Apfel",
+   "lines": [
+    "Tim hat einen roten Apfel.",
+    "Der Apfel ist süß.",
+    "Tim teilt den Apfel mit Lea.",
+    "Jetzt haben beide eine Hälfte."
+   ],
+   "questions": [
+    {
+     "q": "Welche Farbe hat der Apfel?",
+     "answer": "rot",
+     "wrong": [
+      "grün",
+      "gelb"
+     ],
+     "line": 0
+    },
+    {
+     "q": "Wie schmeckt der Apfel?",
+     "answer": "süß",
+     "wrong": [
+      "sauer",
+      "salzig"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Mit wem teilt Tim den Apfel?",
+     "answer": "mit Lea",
+     "wrong": [
+      "mit Mama",
+      "mit Ben"
+     ],
+     "line": 2
+    }
+   ]
+  },
+  {
+   "id": "regen",
+   "level": 0,
+   "emoji": "🌧️",
+   "title": "Regen",
+   "lines": [
+    "Es regnet.",
+    "Paul zieht seine Gummistiefel an.",
+    "Er springt in eine Pfütze.",
+    "Platsch! Seine Hose ist nass."
+   ],
+   "questions": [
+    {
+     "q": "Wie ist das Wetter?",
+     "answer": "Es regnet.",
+     "wrong": [
+      "Die Sonne scheint.",
+      "Es schneit."
+     ],
+     "line": 0
+    },
+    {
+     "q": "Was zieht Paul an?",
+     "answer": "Gummistiefel",
+     "wrong": [
+      "Sandalen",
+      "Hausschuhe"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Wohin springt Paul?",
+     "answer": "in eine Pfütze",
+     "wrong": [
+      "in den Sand",
+      "ins Bett"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Was ist nass?",
+     "answer": "die Hose",
+     "wrong": [
+      "die Mütze",
+      "der Hund"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "turnen",
+   "level": 1,
+   "emoji": "🤸",
+   "title": "Turnen",
+   "lines": [
+    "Heute ist Turnen.",
+    "Lena macht eine Rolle auf der Matte.",
+    "Dann springt sie über den Kasten.",
+    "Lena ist stolz."
+   ],
+   "questions": [
+    {
+     "q": "Was macht Lena auf der Matte?",
+     "answer": "eine Rolle",
+     "wrong": [
+      "einen Kuchen",
+      "ein Bild"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Worüber springt Lena?",
+     "answer": "über den Kasten",
+     "wrong": [
+      "über den Ball",
+      "über den Hund"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Wie fühlt sich Lena?",
+     "answer": "stolz",
+     "wrong": [
+      "traurig",
+      "müde"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "geburtstag",
+   "level": 1,
+   "emoji": "🎂",
+   "title": "Geburtstag",
+   "lines": [
+    "Heute hat Ben Geburtstag.",
+    "Er wird sieben Jahre alt.",
+    "Oma backt einen Schokokuchen.",
+    "Ben bekommt ein rotes Fahrrad."
+   ],
+   "questions": [
+    {
+     "q": "Wer hat Geburtstag?",
+     "answer": "Ben",
+     "wrong": [
+      "Oma",
+      "Tim"
+     ],
+     "line": 0
+    },
+    {
+     "q": "Wie alt wird Ben?",
+     "answer": "sieben",
+     "wrong": [
+      "sechs",
+      "acht"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Was backt Oma?",
+     "answer": "einen Schokokuchen",
+     "wrong": [
+      "ein Brot",
+      "Kekse"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Was bekommt Ben?",
+     "answer": "ein Fahrrad",
+     "wrong": [
+      "einen Ball",
+      "ein Buch"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "schulweg",
+   "level": 1,
+   "emoji": "🚦",
+   "title": "Der Schulweg",
+   "lines": [
+    "Anna geht zur Schule.",
+    "An der Ampel wartet sie.",
+    "Die Ampel ist rot.",
+    "Bei Grün geht Anna über die Straße."
+   ],
+   "questions": [
+    {
+     "q": "Wohin geht Anna?",
+     "answer": "zur Schule",
+     "wrong": [
+      "zum Bäcker",
+      "in den Park"
+     ],
+     "line": 0
+    },
+    {
+     "q": "Wo wartet Anna?",
+     "answer": "an der Ampel",
+     "wrong": [
+      "am Bus",
+      "an der Tür"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Wann geht Anna über die Straße?",
+     "answer": "bei Grün",
+     "wrong": [
+      "bei Rot",
+      "bei Gelb"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "mimi",
+   "level": 1,
+   "emoji": "🐱",
+   "title": "Die Katze Mimi",
+   "lines": [
+    "Mimi ist eine kleine Katze.",
+    "Sie hat ein weiches Fell.",
+    "Am Morgen trinkt sie Milch.",
+    "Dann klettert sie auf den Baum.",
+    "Abends schläft sie auf dem Sofa."
+   ],
+   "questions": [
+    {
+     "q": "Was trinkt Mimi am Morgen?",
+     "answer": "Milch",
+     "wrong": [
+      "Saft",
+      "Tee"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Wohin klettert Mimi?",
+     "answer": "auf den Baum",
+     "wrong": [
+      "auf das Dach",
+      "auf den Tisch"
+     ],
+     "line": 3
+    },
+    {
+     "q": "Wo schläft Mimi abends?",
+     "answer": "auf dem Sofa",
+     "wrong": [
+      "im Korb",
+      "im Garten"
+     ],
+     "line": 4
+    }
+   ]
+  },
+  {
+   "id": "schnee",
+   "level": 2,
+   "emoji": "⛄",
+   "title": "Schnee",
+   "lines": [
+    "Im Winter liegt viel Schnee.",
+    "Mila und Jonas bauen einen Schneemann.",
+    "Er bekommt eine Karotte als Nase.",
+    "Jonas holt noch einen Schal."
+   ],
+   "questions": [
+    {
+     "q": "Wann liegt viel Schnee?",
+     "answer": "im Winter",
+     "wrong": [
+      "im Sommer",
+      "im Herbst"
+     ],
+     "line": 0
+    },
+    {
+     "q": "Was bauen die Kinder?",
+     "answer": "einen Schneemann",
+     "wrong": [
+      "ein Haus",
+      "eine Burg"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Was ist die Nase?",
+     "answer": "eine Karotte",
+     "wrong": [
+      "ein Stein",
+      "ein Apfel"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Was holt Jonas?",
+     "answer": "einen Schal",
+     "wrong": [
+      "eine Mütze",
+      "Handschuhe"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "zoo",
+   "level": 2,
+   "emoji": "🦒",
+   "title": "Im Zoo",
+   "lines": [
+    "Familie Kaya fährt in den Zoo.",
+    "Zuerst sehen sie die Giraffen.",
+    "Die Giraffen fressen Blätter von den Bäumen.",
+    "Danach gehen sie zu den Affen.",
+    "Ein Affe isst eine Banane."
+   ],
+   "questions": [
+    {
+     "q": "Was sehen sie zuerst?",
+     "answer": "die Giraffen",
+     "wrong": [
+      "die Affen",
+      "die Löwen"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Was fressen die Giraffen?",
+     "answer": "Blätter",
+     "wrong": [
+      "Fleisch",
+      "Bananen"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Was isst der Affe?",
+     "answer": "eine Banane",
+     "wrong": [
+      "einen Apfel",
+      "ein Brot"
+     ],
+     "line": 4
+    }
+   ]
+  }
+ ],
+ "en": [
+  {
+   "id": "cat",
+   "level": 0,
+   "emoji": "🐱",
+   "title": "My Cat",
+   "lines": [
+    "I have a cat.",
+    "My cat is black.",
+    "She likes milk.",
+    "She sleeps on my bed."
+   ],
+   "questions": [
+    {
+     "q": "What colour is the cat?",
+     "answer": "black",
+     "wrong": [
+      "white",
+      "brown"
+     ],
+     "line": 1
+    },
+    {
+     "q": "What does the cat like?",
+     "answer": "milk",
+     "wrong": [
+      "juice",
+      "water"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Where does she sleep?",
+     "answer": "on my bed",
+     "wrong": [
+      "in the garden",
+      "on the sofa"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "park",
+   "level": 0,
+   "emoji": "🌳",
+   "title": "In the Park",
+   "lines": [
+    "Tom is in the park.",
+    "He has a red ball.",
+    "He plays with his dog.",
+    "They run and jump."
+   ],
+   "questions": [
+    {
+     "q": "Where is Tom?",
+     "answer": "in the park",
+     "wrong": [
+      "at school",
+      "at home"
+     ],
+     "line": 0
+    },
+    {
+     "q": "What colour is the ball?",
+     "answer": "red",
+     "wrong": [
+      "blue",
+      "green"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Who does Tom play with?",
+     "answer": "his dog",
+     "wrong": [
+      "his sister",
+      "his cat"
+     ],
+     "line": 2
+    }
+   ]
+  },
+  {
+   "id": "frog",
+   "level": 0,
+   "emoji": "🐸",
+   "title": "The Frog",
+   "lines": [
+    "A little frog lives in a pond.",
+    "He is green.",
+    "He can jump very high.",
+    "He eats flies."
+   ],
+   "questions": [
+    {
+     "q": "Where does the frog live?",
+     "answer": "in a pond",
+     "wrong": [
+      "in a tree",
+      "in a house"
+     ],
+     "line": 0
+    },
+    {
+     "q": "What colour is the frog?",
+     "answer": "green",
+     "wrong": [
+      "brown",
+      "yellow"
+     ],
+     "line": 1
+    },
+    {
+     "q": "What does he eat?",
+     "answer": "flies",
+     "wrong": [
+      "fish",
+      "leaves"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "breakfast",
+   "level": 1,
+   "emoji": "🥣",
+   "title": "Breakfast",
+   "lines": [
+    "It is morning.",
+    "Anna eats bread with jam.",
+    "She drinks a glass of milk.",
+    "Then she goes to school."
+   ],
+   "questions": [
+    {
+     "q": "What does Anna eat?",
+     "answer": "bread with jam",
+     "wrong": [
+      "an apple",
+      "cake"
+     ],
+     "line": 1
+    },
+    {
+     "q": "What does she drink?",
+     "answer": "milk",
+     "wrong": [
+      "tea",
+      "juice"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Where does she go then?",
+     "answer": "to school",
+     "wrong": [
+      "to the park",
+      "to bed"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "gym",
+   "level": 1,
+   "emoji": "🤸",
+   "title": "Gym Class",
+   "lines": [
+    "Today we have gym.",
+    "I do a cartwheel.",
+    "My friend jumps on the trampoline.",
+    "Gym is fun!"
+   ],
+   "questions": [
+    {
+     "q": "What do I do?",
+     "answer": "a cartwheel",
+     "wrong": [
+      "a drawing",
+      "a song"
+     ],
+     "line": 1
+    },
+    {
+     "q": "Where does my friend jump?",
+     "answer": "on the trampoline",
+     "wrong": [
+      "on the bed",
+      "on the table"
+     ],
+     "line": 2
+    }
+   ]
+  },
+  {
+   "id": "rain",
+   "level": 1,
+   "emoji": "☔",
+   "title": "A Rainy Day",
+   "lines": [
+    "It is raining.",
+    "Lily takes her umbrella.",
+    "Her boots are yellow.",
+    "She jumps in the puddles."
+   ],
+   "questions": [
+    {
+     "q": "What does Lily take?",
+     "answer": "her umbrella",
+     "wrong": [
+      "her ball",
+      "her hat"
+     ],
+     "line": 1
+    },
+    {
+     "q": "What colour are her boots?",
+     "answer": "yellow",
+     "wrong": [
+      "red",
+      "blue"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Where does she jump?",
+     "answer": "in the puddles",
+     "wrong": [
+      "in the sand",
+      "on the bed"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "beach",
+   "level": 2,
+   "emoji": "🏖️",
+   "title": "At the Beach",
+   "lines": [
+    "It is hot and sunny.",
+    "Ben and Mia are at the beach.",
+    "They build a sandcastle.",
+    "Then they swim in the sea."
+   ],
+   "questions": [
+    {
+     "q": "What is the weather like?",
+     "answer": "hot and sunny",
+     "wrong": [
+      "cold",
+      "rainy"
+     ],
+     "line": 0
+    },
+    {
+     "q": "What do they build?",
+     "answer": "a sandcastle",
+     "wrong": [
+      "a house",
+      "a boat"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Where do they swim?",
+     "answer": "in the sea",
+     "wrong": [
+      "in a pool",
+      "in a lake"
+     ],
+     "line": 3
+    }
+   ]
+  },
+  {
+   "id": "family",
+   "level": 2,
+   "emoji": "👨‍👩‍👧",
+   "title": "My Family",
+   "lines": [
+    "This is my family.",
+    "My mum is a teacher.",
+    "My dad likes cooking.",
+    "I have a baby brother."
+   ],
+   "questions": [
+    {
+     "q": "What is mum?",
+     "answer": "a teacher",
+     "wrong": [
+      "a doctor",
+      "a cook"
+     ],
+     "line": 1
+    },
+    {
+     "q": "What does dad like?",
+     "answer": "cooking",
+     "wrong": [
+      "running",
+      "reading"
+     ],
+     "line": 2
+    },
+    {
+     "q": "Who is the baby?",
+     "answer": "my brother",
+     "wrong": [
+      "my sister",
+      "my cousin"
+     ],
+     "line": 3
+    }
+   ]
+  }
+ ]
+}

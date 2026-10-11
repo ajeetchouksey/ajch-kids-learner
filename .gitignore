@@ -1,25 +1,16 @@
-# Temporary files
-*.tmp
-*.temp
-.DS_Store
-Thumbs.db
-
-# Editor files
+# build output and test screenshots
+dist/
+test-output/
+node_modules/
+.wrangler/
+__pycache__/
+*.pyc
+# editors / OS
 .vscode/
 .idea/
-*.swp
-*.swo
-
-# Logs
+.DS_Store
+Thumbs.db
 *.log
-
-# Node modules (in case any are added later)
-node_modules/
-
-# Build artifacts
-dist/
-build/
-
-# Environment files
 .env
 .env.local
+.dev.vars

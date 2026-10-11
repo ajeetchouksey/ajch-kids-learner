@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 RES=[]
 def ok(c,name,info=""):
     RES.append((bool(c),name,str(info)[:200]));print(("PASS " if c else "FAIL ")+name+("" if c else "  -> "+str(info)[:300]))
-URL="http://localhost:8765/AaryaAI.html"
+URL=os.environ.get("URL","http://localhost:8765/AaryaAI.html")
 def mkpage(b,prof=None,w=390,h=844):
     pg=b.new_context(viewport={"width":w,"height":h}).new_page();pg._errs=[];pg.on("pageerror",lambda e:pg._errs.append(str(e)))
     init="speechSynthesis.speak=()=>{};/*Storage.prototype.removeItem=function(k){console.log('RM '+k+' '+new Error().stack.split('\\n').slice(1,4).join(' | '));return _rm.call(this,k)};const _cl=Storage.prototype.clear;Storage.prototype.clear=function(){console.log('CLEAR '+new Error().stack);*/"

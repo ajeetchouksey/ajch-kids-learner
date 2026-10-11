@@ -1,5 +1,11 @@
 /* ============================ AaryaAI boot: setup wizard · save file · personalised start ============================ */
 const AAI={PKEY:"aaryaai-profile",KEYS:["aaryaai-profile","aarya-rewards-v1","aarya-grammar-v1","aarya-deutsch-v1","aarya-mathe-v1","aarya-brain-v1","aarya-bhasha-v1","aarya-plan-v1","aarya-tab"]};
+/* stored-data schema: bump SCHEMA and add a step to MIGRATE when the shape of saved data changes; runs once per device before the app reads anything */
+AAI.SCHEMA=1;AAI.MIGRATE={/* 1:()=>{…change keys from schema 0 to 1…} */};
+(()=>{try{const k="aaryaai-schema";let v=+(localStorage.getItem(k)||0);if(v>=AAI.SCHEMA)return;
+  const backup={};for(const key of AAI.KEYS){const x=localStorage.getItem(key);if(x!=null)backup[key]=x;}
+  if(Object.keys(backup).length)localStorage.setItem("aaryaai-backup",JSON.stringify({why:"migration "+v+"→"+AAI.SCHEMA,at:new Date().toISOString(),data:backup}));
+  while(v<AAI.SCHEMA){v++;if(AAI.MIGRATE[v])AAI.MIGRATE[v]();}localStorage.setItem(k,String(AAI.SCHEMA));}catch(e){}})();
 AAI.esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 AAI.prof=()=>{try{return JSON.parse(localStorage.getItem(AAI.PKEY)||"null");}catch(e){return null;}};
 AAI.t=(de,en)=>(((AAI.prof()||{}).uiLang)==="en"?en:de);

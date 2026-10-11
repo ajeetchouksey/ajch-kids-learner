@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 RES=[]
 def ok(c,name,info=""):
     RES.append((bool(c),name,info));print(("PASS " if c else "FAIL ")+name+("" if c else "  -> "+str(info)))
-URL="file://"+os.getcwd()+"/AaryaAI.html"
+URL=os.environ.get("URL","http://localhost:8765/AaryaAI.html")
 PROF="localStorage.setItem('aaryaai-profile',JSON.stringify({name:'Aarya',gender:'f',grade:1,created:'2026-09-01'}));speechSynthesis.speak=()=>{};"
 with sync_playwright() as p:
   b=p.chromium.launch();pg=b.new_page(viewport={"width":390,"height":844});errs=[];pg.on("pageerror",lambda e:errs.append(str(e)))

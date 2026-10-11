@@ -1,6 +1,6 @@
 import os,json
 from playwright.sync_api import sync_playwright
-URL=os.environ.get("URL","http://localhost:8765/AaryaAI.html");O="/tmp/claude-0/-home-claude/cd893b8d-2513-5015-a160-25cbff4c1cab/scratchpad/review/lp/";os.makedirs(O,exist_ok=True)
+URL=os.environ.get("URL","http://localhost:8765/AaryaAI.html");O=os.path.join(os.environ.get("OUT","test-output"),"lp")+"/";os.makedirs(O,exist_ok=True)
 RES=[]
 def ok(c,n,i=""):RES.append(bool(c));print(("PASS " if c else "FAIL ")+n+("" if c else "  -> "+str(i)[:300]))
 INIT="localStorage.getItem('aaryaai-profile')||localStorage.setItem('aaryaai-profile',JSON.stringify({name:'Aarya',gender:'f',grade:1,created:'2026-09-01'}));window.__fastRead=true;setInterval(()=>{const a=document.getElementById('awardpop');if(a&&!a.hidden){const k=document.getElementById('apok');k&&k.click();}},150);"

@@ -93,45 +93,8 @@ const LX=(function(){
 
 /* ---------- 📖 READ: read aloud, then answer with a look back into the text ---------- */
 const READ=(function(){
-  /* [id, level, emoji, title, lines, questions [question, right, wrong, wrong, line index]] – easy → harder */
-  const TX={de:[
-   ["bello",0,"🐶","Der Hund Bello",["Bello ist ein Hund.","Er ist braun und klein.","Bello spielt gern mit dem Ball.","Am Abend schläft er in seinem Korb."],
-    [["Wie heißt der Hund?","Bello","Bruno","Max",0],["Welche Farbe hat Bello?","braun","schwarz","weiß",1],["Womit spielt Bello gern?","mit dem Ball","mit der Katze","mit dem Stock",2],["Wo schläft Bello?","im Korb","im Bett","im Garten",3]]],
-   ["garten",0,"🌻","Im Garten",["Mia ist im Garten.","Sie gießt die Blumen.","Die Sonne scheint.","Ein Vogel singt im Baum."],
-    [["Wer ist im Garten?","Mia","Tom","Oma",0],["Was gießt Mia?","die Blumen","den Baum","den Hund",1],["Wie ist das Wetter?","Die Sonne scheint.","Es regnet.","Es schneit.",2],["Wo singt der Vogel?","im Baum","auf dem Dach","im Haus",3]]],
-   ["apfel",0,"🍎","Der Apfel",["Tim hat einen roten Apfel.","Der Apfel ist süß.","Tim teilt den Apfel mit Lea.","Jetzt haben beide eine Hälfte."],
-    [["Welche Farbe hat der Apfel?","rot","grün","gelb",0],["Wie schmeckt der Apfel?","süß","sauer","salzig",1],["Mit wem teilt Tim den Apfel?","mit Lea","mit Mama","mit Ben",2]]],
-   ["regen",0,"🌧️","Regen",["Es regnet.","Paul zieht seine Gummistiefel an.","Er springt in eine Pfütze.","Platsch! Seine Hose ist nass."],
-    [["Wie ist das Wetter?","Es regnet.","Die Sonne scheint.","Es schneit.",0],["Was zieht Paul an?","Gummistiefel","Sandalen","Hausschuhe",1],["Wohin springt Paul?","in eine Pfütze","in den Sand","ins Bett",2],["Was ist nass?","die Hose","die Mütze","der Hund",3]]],
-   ["turnen",1,"🤸","Turnen",["Heute ist Turnen.","Lena macht eine Rolle auf der Matte.","Dann springt sie über den Kasten.","Lena ist stolz."],
-    [["Was macht Lena auf der Matte?","eine Rolle","einen Kuchen","ein Bild",1],["Worüber springt Lena?","über den Kasten","über den Ball","über den Hund",2],["Wie fühlt sich Lena?","stolz","traurig","müde",3]]],
-   ["geburtstag",1,"🎂","Geburtstag",["Heute hat Ben Geburtstag.","Er wird sieben Jahre alt.","Oma backt einen Schokokuchen.","Ben bekommt ein rotes Fahrrad."],
-    [["Wer hat Geburtstag?","Ben","Oma","Tim",0],["Wie alt wird Ben?","sieben","sechs","acht",1],["Was backt Oma?","einen Schokokuchen","ein Brot","Kekse",2],["Was bekommt Ben?","ein Fahrrad","einen Ball","ein Buch",3]]],
-   ["schulweg",1,"🚦","Der Schulweg",["Anna geht zur Schule.","An der Ampel wartet sie.","Die Ampel ist rot.","Bei Grün geht Anna über die Straße."],
-    [["Wohin geht Anna?","zur Schule","zum Bäcker","in den Park",0],["Wo wartet Anna?","an der Ampel","am Bus","an der Tür",1],["Wann geht Anna über die Straße?","bei Grün","bei Rot","bei Gelb",3]]],
-   ["mimi",1,"🐱","Die Katze Mimi",["Mimi ist eine kleine Katze.","Sie hat ein weiches Fell.","Am Morgen trinkt sie Milch.","Dann klettert sie auf den Baum.","Abends schläft sie auf dem Sofa."],
-    [["Was trinkt Mimi am Morgen?","Milch","Saft","Tee",2],["Wohin klettert Mimi?","auf den Baum","auf das Dach","auf den Tisch",3],["Wo schläft Mimi abends?","auf dem Sofa","im Korb","im Garten",4]]],
-   ["schnee",2,"⛄","Schnee",["Im Winter liegt viel Schnee.","Mila und Jonas bauen einen Schneemann.","Er bekommt eine Karotte als Nase.","Jonas holt noch einen Schal."],
-    [["Wann liegt viel Schnee?","im Winter","im Sommer","im Herbst",0],["Was bauen die Kinder?","einen Schneemann","ein Haus","eine Burg",1],["Was ist die Nase?","eine Karotte","ein Stein","ein Apfel",2],["Was holt Jonas?","einen Schal","eine Mütze","Handschuhe",3]]],
-   ["zoo",2,"🦒","Im Zoo",["Familie Kaya fährt in den Zoo.","Zuerst sehen sie die Giraffen.","Die Giraffen fressen Blätter von den Bäumen.","Danach gehen sie zu den Affen.","Ein Affe isst eine Banane."],
-    [["Was sehen sie zuerst?","die Giraffen","die Affen","die Löwen",1],["Was fressen die Giraffen?","Blätter","Fleisch","Bananen",2],["Was isst der Affe?","eine Banane","einen Apfel","ein Brot",4]]]],
-  en:[
-   ["cat",0,"🐱","My Cat",["I have a cat.","My cat is black.","She likes milk.","She sleeps on my bed."],
-    [["What colour is the cat?","black","white","brown",1],["What does the cat like?","milk","juice","water",2],["Where does she sleep?","on my bed","in the garden","on the sofa",3]]],
-   ["park",0,"🌳","In the Park",["Tom is in the park.","He has a red ball.","He plays with his dog.","They run and jump."],
-    [["Where is Tom?","in the park","at school","at home",0],["What colour is the ball?","red","blue","green",1],["Who does Tom play with?","his dog","his sister","his cat",2]]],
-   ["frog",0,"🐸","The Frog",["A little frog lives in a pond.","He is green.","He can jump very high.","He eats flies."],
-    [["Where does the frog live?","in a pond","in a tree","in a house",0],["What colour is the frog?","green","brown","yellow",1],["What does he eat?","flies","fish","leaves",3]]],
-   ["breakfast",1,"🥣","Breakfast",["It is morning.","Anna eats bread with jam.","She drinks a glass of milk.","Then she goes to school."],
-    [["What does Anna eat?","bread with jam","an apple","cake",1],["What does she drink?","milk","tea","juice",2],["Where does she go then?","to school","to the park","to bed",3]]],
-   ["gym",1,"🤸","Gym Class",["Today we have gym.","I do a cartwheel.","My friend jumps on the trampoline.","Gym is fun!"],
-    [["What do I do?","a cartwheel","a drawing","a song",1],["Where does my friend jump?","on the trampoline","on the bed","on the table",2]]],
-   ["rain",1,"☔","A Rainy Day",["It is raining.","Lily takes her umbrella.","Her boots are yellow.","She jumps in the puddles."],
-    [["What does Lily take?","her umbrella","her ball","her hat",1],["What colour are her boots?","yellow","red","blue",2],["Where does she jump?","in the puddles","in the sand","on the bed",3]]],
-   ["beach",2,"🏖️","At the Beach",["It is hot and sunny.","Ben and Mia are at the beach.","They build a sandcastle.","Then they swim in the sea."],
-    [["What is the weather like?","hot and sunny","cold","rainy",0],["What do they build?","a sandcastle","a house","a boat",2],["Where do they swim?","in the sea","in a pool","in a lake",3]]],
-   ["family",2,"👨‍👩‍👧","My Family",["This is my family.","My mum is a teacher.","My dad likes cooking.","I have a baby brother."],
-    [["What is mum?","a teacher","a doctor","a cook",1],["What does dad like?","cooking","running","reading",2],["Who is the baby?","my brother","my sister","my cousin",3]]]]};
+  /* texts live in content/learn/read.json (validated in CI); kept here in the compact form the code uses */
+  const TX={};for(const l of ["de","en"])TX[l]=CONTENT.read[l].map(t=>[t.id,t.level,t.emoji,t.title,t.lines,t.questions.map(q=>[q.q,q.answer,q.wrong[0],q.wrong[1],q.line])]);
   const UI={de:{title:"📖 Lesen & verstehen",read:"Lies die Geschichte laut vor.",readS:"Zeig mit dem Finger mit. Lies langsam und deutlich.",did:"✅ Fertig vorgelesen",wait:"Lies in Ruhe …",hear:"🔊 Jetzt anhören und vergleichen",toQ:"Zu den Fragen ▶",q:"Frage",of:"von",look:"👀 Schau im Text nach! Die Antwort steht im gelben Satz.",right:"Richtig!",next:"Weiter ▶",done:"Fertig!",again:"Nächste Geschichte 🔁",close:"Schließen",score:"{r} von {n} beim ersten Versuch richtig",all:"Du hast alle Geschichten gelesen! Wir fangen wieder von vorn an."},
            en:{title:"📖 Read & understand",read:"Read the story out loud.",readS:"Follow with your finger. Read slowly and clearly.",did:"✅ I read it out loud",wait:"Take your time …",hear:"🔊 Now listen and compare",toQ:"To the questions ▶",q:"Question",of:"of",look:"👀 Look in the text! The answer is in the yellow sentence.",right:"Right!",next:"Next ▶",done:"Done!",again:"Next story 🔁",close:"Close",score:"{r} of {n} right on the first try",all:"You have read every story! Let's start again."}};
   let S=null;
@@ -171,13 +134,8 @@ const READ=(function(){
 
 /* ---------- 🔤 SPELL: build the word from letter tiles ---------- */
 const SPELL=(function(){
-  /* [word, emoji, article] – easy → harder; German nouns keep their capital letter */
-  const W={de:[[["Ei","🥚","das"],["Uhr","⌚","die"],["Oma","👵","die"],["Opa","👴","der"],["Eis","🍦","das"],["Kuh","🐮","die"],["Hund","🐶","der"],["Maus","🐭","die"],["Ball","⚽","der"],["Haus","🏠","das"],["Baum","🌳","der"],["Mond","🌙","der"],["Hase","🐰","der"],["Nase","👃","die"],["Rose","🌹","die"],["Igel","🦔","der"],["Buch","📖","das"],["Brot","🍞","das"],["Ente","🦆","die"],["Auto","🚗","das"]],
-             [["Katze","🐱","die"],["Sonne","☀️","die"],["Blume","🌸","die"],["Apfel","🍎","der"],["Fisch","🐟","der"],["Vogel","🐦","der"],["Tiger","🐯","der"],["Zebra","🦓","das"],["Pferd","🐴","das"],["Stern","⭐","der"],["Schiff","🚢","das"],["Banane","🍌","die"],["Tomate","🍅","die"],["Löwe","🦁","der"],["Hand","✋","die"],["Bett","🛏️","das"]],
-             [["Schwein","🐷","das"],["Giraffe","🦒","die"],["Elefant","🐘","der"],["Pinguin","🐧","der"],["Krokodil","🐊","das"],["Fahrrad","🚲","das"],["Flugzeug","✈️","das"],["Ananas","🍍","die"],["Schnecke","🐌","die"],["Kuchen","🍰","der"]]],
-           en:[[["cat","🐱"],["dog","🐶"],["sun","☀️"],["bus","🚌"],["hat","🎩"],["pig","🐷"],["cup","☕"],["bed","🛏️"],["egg","🥚"],["fish","🐟"],["cow","🐮"],["box","📦"]],
-             [["apple","🍎"],["house","🏠"],["tree","🌳"],["ball","⚽"],["frog","🐸"],["duck","🦆"],["book","📖"],["star","⭐"],["cake","🍰"],["milk","🥛"],["moon","🌙"],["bird","🐦"]],
-             [["horse","🐴"],["mouse","🐭"],["train","🚆"],["chair","🪑"],["flower","🌸"],["rabbit","🐰"],["banana","🍌"],["pencil","✏️"],["snake","🐍"],["sheep","🐑"]]]};
+  /* words live in content/learn/spell.json: three groups per language, easy → harder */
+  const W={};for(const l of ["de","en"])W[l]=CONTENT.spell[l].map(g=>g.map(w=>w.article?[w.word,w.emoji,w.article]:[w.word,w.emoji]));
   const UI={de:{title:"🔤 Wörter schreiben",task:"Hör gut zu und bau das Wort.",check:"✓ Prüfen",del:"⌫",ok:"Richtig geschrieben!",wrong:"So schreibt man es:",fix:"Jetzt du – bau es noch einmal richtig.",fixed:"Super verbessert! +2",next:"Weiter ▶",done:"Fertig!",again:"Noch eine Runde 🔁",close:"Schließen",score:"{r} von {n} Wörtern beim ersten Versuch richtig",w:"Wort"},
            en:{title:"🔤 Spell words",task:"Listen carefully and build the word.",check:"✓ Check",del:"⌫",ok:"Spelled right!",wrong:"This is how you spell it:",fix:"Your turn – build it again.",fixed:"Well corrected! +2",next:"Next ▶",done:"Done!",again:"Another round 🔁",close:"Close",score:"{r} of {n} words right on the first try",w:"Word"}};
   const ABC={de:"abdefghiklmnoprstuz",en:"abcdefghilmnoprstuw"};
@@ -219,10 +177,8 @@ const SPELL=(function(){
 
 /* ---------- ✏️ WRITE: one sentence a day in the notebook, Mum/Dad checks ---------- */
 const WRITE=(function(){
-  const PR={de:[["🐶⚽","Was macht der Hund?","Der Hund spielt mit dem Ball."],["🐱🥛","Was trinkt die Katze?","Die Katze trinkt Milch."],["👧🎨","Was macht das Mädchen?","Das Mädchen malt ein Bild."],
-    ["☀️🌳","Wie ist das Wetter?","Die Sonne scheint."],["🍎🧺","Was ist im Korb?","Im Korb ist ein Apfel."],["🐟🌊","Wo schwimmt der Fisch?","Der Fisch schwimmt im Wasser."],["👦🚲","Was macht der Junge?","Der Junge fährt Fahrrad."],
-    ["🐦🌳","Wo sitzt der Vogel?","Der Vogel sitzt auf dem Baum."],["🤸","Was machst du gern?","Ich turne gern."],["🎂🎁","Was gibt es beim Geburtstag?","Es gibt einen Kuchen."],["🌧️☂️","Was brauchst du bei Regen?","Ich brauche einen Schirm."],["🐘💧","Was macht der Elefant?","Der Elefant trinkt Wasser."]],
-   en:[["🐶","I have a …","I have a dog."],["🍎","I like …","I like apples."],["⚽🔴","The ball is …","The ball is red."],["🐱","The cat is …","The cat is small."],["☀️","The sun is …","The sun is hot."],["🍕","I eat …","I eat pizza."],["🐸","The frog is …","The frog is green."],["🤸","I can …","I can jump."]]};
+  /* picture prompts live in content/learn/write.json */
+  const PR={};for(const l of ["de","en"])PR[l]=CONTENT.write[l].map(p=>[p.emoji,p.prompt,p.model]);
   const UI={de:{title:"✏️ Heft-Satz",task:"Schreib einen ganzen Satz in dein Heft.",help:"Wörter-Hilfe",rules:["Großer Anfangsbuchstabe","Lücken zwischen den Wörtern","Punkt am Ende"],did:"✏️ Ich habe geschrieben",wait:"Schreib in Ruhe …",
         parent:"👨‍👩‍👧 Mama/Papa: Schau ins Heft und hake ab",checks:["Großer Anfangsbuchstabe","Lücken zwischen den Wörtern","Punkt am Ende","Wörter richtig geschrieben","Schön geschrieben"],model:"Beispiel-Satz",ok:"✓ Geprüft",fix:"Verbessere die Fehler im Heft – dann ist es perfekt!",great:"Wunderbar geschrieben!",close:"Schließen",doneToday:"Heute schon geschrieben – toll! Morgen gibt es ein neues Bild.",again:"Noch einen Satz schreiben"},
            en:{title:"✏️ Notebook sentence",task:"Write the whole sentence in your notebook.",help:"Word help",rules:["Capital letter at the start","Spaces between words","Full stop at the end"],did:"✏️ I have written it",wait:"Take your time …",

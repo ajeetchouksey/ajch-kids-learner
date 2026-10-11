@@ -3,7 +3,7 @@ import os,json
 with sync_playwright() as p:
   b=p.chromium.launch();pg=b.new_page(viewport={"width":390,"height":844});errs=[];pg.on("pageerror",lambda e:errs.append(str(e)))
   pg.add_init_script("localStorage.setItem('aaryaai-profile',JSON.stringify({name:'Aarya',gender:'f',grade:1,created:'2026-09-01'}));speechSynthesis.speak=()=>{};")
-  pg.goto("file://"+os.getcwd()+"/AaryaAI.html");pg.wait_for_timeout(700)
+  pg.goto(os.environ.get("URL","http://localhost:8765/AaryaAI.html"));pg.wait_for_timeout(700)
   res=pg.evaluate("""()=>{const out={};const us=MA.U().filter(u=>u.k==="A");
     for(const u of us){const bad=[];const seen=new Set();
       for(let i=0;i<400;i++){let q;try{q=u.gen();}catch(e){bad.push("EXC "+e.message);break;}

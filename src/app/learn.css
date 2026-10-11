@@ -58,3 +58,6 @@ body.gated #appD .mode[data-m=memory]::after,body.gated #appD .mode[data-m=rw]::
 @media (max-width:380px){.kpg{grid-template-columns:repeat(3,64px)}.slot{width:38px;height:50px;font-size:26px}.tile{min-width:44px;height:50px;font-size:24px}.lrnbtns{grid-template-columns:1fr}}
 .nbgate~.kp{display:none}
 .lxtask .spk{display:inline-flex;vertical-align:middle;margin-left:6px}
+#pwaUpd{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;background:#1D2B53;color:#fff;border-radius:18px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);width:min(92vw,460px)}
+#pwaUpd span{flex:1 1 200px;font-weight:600}#pwaUpd .btn{min-height:44px}#pwaUpd .btn.ghost{color:#fff;border-color:#fff;background:transparent}
+.appver{display:block;text-align:center;font-size:12.5px;color:#5B6380;margin-top:10px}

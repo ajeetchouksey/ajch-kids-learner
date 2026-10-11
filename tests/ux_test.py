@@ -1,6 +1,7 @@
 import os,json,collections
 from playwright.sync_api import sync_playwright
-URL="file://"+os.getcwd()+"/AaryaAI.html";O="/tmp/claude-0/-home-claude/cd893b8d-2513-5015-a160-25cbff4c1cab/scratchpad/review/ux/"
+URL=os.environ.get("URL","http://localhost:8765/AaryaAI.html");O=os.path.join(os.environ.get("OUT","test-output"),"ux")+"/"
+os.makedirs(O,exist_ok=True)
 AUDIT=r"""(root)=>{const R=document.querySelector(root)||document.body;const out={overflow:document.documentElement.scrollWidth>innerWidth+1,small:[],tiny:[],contrast:[],clip:[]};
  const lum=c=>{const m=c.match(/[\d.]+/g);if(!m)return null;const [r,g,b,a]=m.map(Number);if(a===0)return null;const f=x=>{x/=255;return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4)};return .2126*f(r)+.7152*f(g)+.0722*f(b);};
  const bgOf=e=>{while(e){const s=getComputedStyle(e);if(s.backgroundImage&&s.backgroundImage!=='none')return null;const c=s.backgroundColor;if(c&&!/rgba\(0, 0, 0, 0\)|transparent/.test(c))return c;e=e.parentElement;}return 'rgb(255,255,255)';};

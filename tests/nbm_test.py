@@ -1,6 +1,7 @@
+import os
 import asyncio,pathlib
 from playwright.async_api import async_playwright
-F="file://"+str(pathlib.Path("AaryaAI.html").resolve())
+F=os.environ.get("URL","http://localhost:8765/AaryaAI.html")
 async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch();pg=await b.new_page(viewport={"width":390,"height":844})
