@@ -4,7 +4,7 @@ A learning app for children in Klasse 1 at a German Grundschule: **Deutsch · Ma
 Learning comes first: a daily **Lernplan** (read a story and answer questions, spell words, write one sentence in the notebook, one maths round with typed answers) unlocks the games.
 
 - Works offline, installable on phone and laptop (PWA), asks before updating.
-- No account, no server data: progress stays in the child's browser (+ optional save file).
+- No account of ours, no server data: progress stays in the child's browser, optionally in a save file or in the **family's own Google Drive** (hidden app folder, syncs phone ↔ tablet ↔ laptop).
 - Hindi and Marathi only spoken with native voices.
 
 ## Use it
@@ -23,6 +23,7 @@ Edit texts, spelling words and writing prompts in `content/learn/*.json` – the
 ## Deploy
 Every push to `main` is validated, built, tested and deployed to **Cloudflare**; pull requests get a preview URL.
 One-time setup: add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as GitHub Actions secrets – details in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#6-hosting--cloudflare).
+Google Drive: create an OAuth web client and set the Actions variable `GOOGLE_CLIENT_ID` – steps in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#5b-family-storage--google-drive-srcappsyncjs).
 
 ## Architecture
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) – overview diagram, build, runtime, hosting, quality gates and the phase 2/3 roadmap.

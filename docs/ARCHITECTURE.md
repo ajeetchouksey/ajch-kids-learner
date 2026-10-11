@@ -8,7 +8,7 @@ It must work **offline**, keep **all data on the child's device**, and be simple
 | Principle | What it means in practice |
 |---|---|
 | Offline first | One self-contained HTML file (fonts embedded). The hosted version adds a service worker so it also opens without internet. |
-| Privacy by design | No accounts, no server-side data, no tracking. Progress lives in the browser (localStorage) plus an optional save file chosen by the parent. |
+| Privacy by design | No accounts of ours, no server-side data, no tracking. Progress lives in the browser (localStorage), optionally in a save file or in the **family's own Google Drive** (hidden app folder). |
 | Learning before play | Daily Lernplan (read · spell · write · maths) unlocks games; reading pause and typed answers stop guessing. |
 | One language per area | English area 100 % English, Deutsch/Mathe 100 % German, Hindi/Marathi with selectable instruction language and native voices only. |
 | Content is data | Texts, words and prompts are JSON, checked by a validator before every build. |
@@ -33,6 +33,7 @@ flowchart LR
   BLD --> DL["AaryaAI.html\n(offline download)"]
   PROD --> DEV["Phone / tablet / laptop\nPWA + service worker cache"]
   DEV --> LS[("localStorage\n+ optional save file")]
+  DEV <-->|"OAuth token (browser only)\ndrive.appdata"| GD[("Family's Google Drive\nhidden app folder\naaryaai-<child>.json")]
 ```
 
 ## 3. Repository layout
@@ -73,6 +74,27 @@ The build is plain Node (≥ 18) with **zero npm dependencies**. `node scripts/b
 - **Updates (PWA):** new deploy → browser installs the new service worker in the background → banner "Neue Version … Aktualisieren / Später" → only after OK: `SKIP_WAITING`, reload, old cache deleted. Checks every 30 min and when the app comes back to the foreground.
 - **Speech:** Web Speech API (synthesis + recognition). Hindi/Marathi content is only spoken by a native `hi-*` / `mr-*` voice, never by a fallback voice.
 
+## 5b. Family storage – Google Drive (`src/app/sync.js`)
+
+The app never sees a server of ours: the browser signs in with **Google Identity Services** (token model) and talks to the **Drive API** directly.
+
+- **Scope:** `drive.appdata` only – a hidden folder that belongs to the app. It cannot list, read or change any other file in the Drive.
+- **File:** `aaryaai-<child>.json` in `appDataFolder`, same format as the 💾 save file (`{app, format, child, data, sync:{mtime, device}}`), so it can also be loaded manually.
+- **Change times:** `AAI.MT` records when each storage key (Mathe, Deutsch, rewards, …) last changed (`aaryaai-mtime`).
+- **Sync:** on opening, every 2 min when something changed, when the app goes to the background and when the device comes online. Merge per key: newer change wins; both sides end up with the merged result. In the background it only uploads; remote changes are applied when the app is opened again (never a reload mid-exercise).
+- **First connection on a device** that finds an existing file: the parent chooses *Aus Google Drive laden* or *Dieses Gerät behalten*.
+- **Tokens:** in memory + `sessionStorage` (≈1 h), never in localStorage or the save file. After a restart the 💾 button shows **☁️⚠️**; one tap re-confirms the sign-in (no consent screen again).
+- **Limits:** if two devices change the *same* area at the same time, the later change wins for that area (points from the other device in that area can be lost). Not available in the offline file or the Claude artifact (no fixed https origin) – they keep the save file.
+- **Privacy page:** `privacy.html` (deployed with the app) – needed for the Google consent screen.
+
+**One-time Google setup (owner):**
+1. [console.cloud.google.com](https://console.cloud.google.com) → new project **AaryaAI** → *APIs & Services → Library* → enable **Google Drive API**.
+2. *OAuth consent screen* (Google Auth Platform → Branding/Audience): user type **External**, app name *AaryaAI*, support e-mail, app home page = the Cloudflare URL, privacy policy = `<URL>/privacy.html`. *Data access* → add scope `…/auth/drive.appdata`. *Audience* → while **Testing**, add the Google accounts of your family as test users (up to 100).
+3. *Clients* → *Create client* → **Web application** → *Authorized JavaScript origins*: the Cloudflare URL(s), e.g. `https://aaryaai-kids.<account>.workers.dev` and later `https://kids.aaryaai.dev` (no path, no trailing slash). No redirect URI is needed.
+4. Copy the **Client ID** (`….apps.googleusercontent.com`) → GitHub repo → *Settings → Secrets and variables → Actions → Variables* → `GOOGLE_CLIENT_ID`. The client ID is public by design (it ends up in the page); no client secret is used.
+5. Push / re-run CI. Without the variable the app simply shows "Google Drive ist noch nicht eingerichtet".
+6. Later, for families outside your test-user list: *Audience → Publish app* (Google may ask for verification of the app; check the requirements for the `drive.appdata` scope at that time).
+
 ## 6. Hosting – Cloudflare
 
 Static assets on **Cloudflare Workers** (`wrangler.jsonc`, no server code).
@@ -101,7 +123,9 @@ Until the secrets exist, CI still validates, builds and tests; the deploy job is
 
 ## 8. Roadmap
 
-**Phase 1 – done (this change):** Node build, content JSON + validator, PWA with update prompt, schema/migrations hook, CI, Cloudflare deploy, version in parent area.
+**Phase 1.5 – done:** Google Drive sync (hidden app folder, per-area merge, one-tap reconnect, privacy page). Next provider: OneDrive (Microsoft Graph app folder) behind the same `SYNC` provider interface.
+
+**Phase 1 – done:** Node build, content JSON + validator, PWA with update prompt, schema/migrations hook, CI, Cloudflare deploy, version in parent area.
 
 **Phase 2 – modules & types**
 - Vite + TypeScript, ES modules instead of globals; `vite-plugin-singlefile` keeps the one-file offline download.

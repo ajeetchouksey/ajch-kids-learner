@@ -153,6 +153,7 @@ function renderParent(){
       ${planLog()}</div>
       <small class="appver">AaryaAI ${(()=>{try{return PWA.label();}catch(e){return "";}})()}</small></div>
     ${STORE.panel()}
+    ${typeof SYNC!=="undefined"?SYNC.panel():""}
     <div class="panel parent"><h3>🎯 ${T("Tagesziel","Daily goal")}</h3><p>${T("Lieber klein anfangen: etwa 15 Antworten und eine Heft-Zeit pro Tag reichen.","Start small: about 15 answers and one notebook time a day is plenty.")}</p>
       ${step("de","🇩🇪 Deutsch",T("richtige Antworten (0 = aus)","correct answers (0 = off)"))}${step("math","🧮 Mathe",T("richtige Antworten","correct answers"))}${step("en","🔤 English",T("richtige Antworten","correct answers"))}${step("brain","🧠 Training",T("richtige Antworten","correct answers"))}${step("read","📖 "+T("Lesen","Reading"),T("Sätze laut gelesen","sentences read aloud"))}${step("heft","📓 "+T("Heft-Zeit","Notebook time"),T("Heft-Zeiten pro Tag","notebook times per day"))}
       <h3 style="margin-top:14px">🪙 ${T("So gibt es Punkte","How points work")}</h3><ul>
@@ -167,7 +168,7 @@ function renderParent(){
   $p("uiLang").querySelectorAll("button").forEach(b=>b.onclick=()=>{const l=b.dataset.v;PROF.setUiLang(l);UIL.set(l);renderParent();renderTabs();});
   $p("enLv").querySelectorAll("button").forEach(b=>b.onclick=()=>{PROF.setEnLevel(+b.dataset.v);try{EN.home();}catch(e){}renderParent();});
   $p("profEdit").onclick=()=>AAI.wizard({edit:true}).then(p=>{if(p)location.reload();});
-  STORE.ui();
+  STORE.ui();try{SYNC.ui();}catch(e){}
   document.querySelectorAll("#vParent .stepper button").forEach(b=>b.onclick=()=>{const k=b.dataset.k,cur=+REW.R().goal[k]||0;REW.setGoal(k,Math.max(0,cur+ +b.dataset.d));renderParent();});
   $p("rreset").onclick=()=>{$p("rrbox").innerHTML=`${T("Wirklich alles löschen? Vorher wird eine Sicherung gespeichert.","Clear everything? A backup is kept first.")} <button class="btn" id="ry" style="--c:var(--bad);font-size:15px;padding:6px 14px">${T("Ja","Yes")}</button><button class="btn ghost" id="rn" style="font-size:15px;padding:6px 14px">${T("Nein","No")}</button>`;
     $p("ry").onclick=()=>{REW.reset();renderParent();};$p("rn").onclick=renderParent;};

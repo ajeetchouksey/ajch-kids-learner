@@ -33,7 +33,7 @@ async def main():
     await pg.click("#goParent2");await pg.wait_for_selector("#pgIn");q=await pg.inner_text(".gate .fl span");a,b2=[int(x) for x in q.split("Wie viel ist ")[1].split("?")[0].split(" × ")]
     await pg.fill("#pgIn","1");await pg.click("#pgOk");ok("falsch" in await pg.inner_text("#pgErr"),"gate refuses wrong answer")
     await pg.fill("#pgIn",str(a*b2));await pg.click("#pgOk");await pg.wait_for_timeout(200);t=await pg.inner_text("#vParent");ok(await pg.evaluate("CUR")=="parent" and "Wochenbericht" in t and "Speicherdatei" in t and "English-Stufe" in t,"parent area opens after correct answer")
-    await pg.screenshot(path="../review/r_parent.png",full_page=True)
+    await pg.screenshot(path="r_parent.png",full_page=True)
     await pg.click('#enLv button[data-v="1"]');await pg.click('.tab[data-v="en"]');ok("Doing Words" in await pg.inner_text("#appE"),"parent sets English level → Klasse 1")
     # scoring: mistakes don't reset the counter
     p0=await pg.evaluate("REW.R().points");await pg.evaluate("()=>{for(let i=0;i<10;i++)REW.hit('math',i%2?'wrong':'correct')}");await close()

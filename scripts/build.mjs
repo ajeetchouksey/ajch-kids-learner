@@ -6,7 +6,7 @@
      dist/sw.js, dist/manifest.webmanifest, dist/icon-*.svg, dist/version.json
    Legacy engines (English, Mathe, Deutsch) are still adapted with exact-match string patches from
    src/legacy-patches.json; every patch must match at least once or the build fails (phase 2 removes them). */
-import {readFileSync,writeFileSync,mkdirSync,copyFileSync,existsSync} from "node:fs";
+import {readFileSync,writeFileSync,mkdirSync,copyFileSync,existsSync,rmSync} from "node:fs";
 import {execSync} from "node:child_process";
 import {fileURLToPath} from "node:url";
 import path from "node:path";
@@ -44,7 +44,9 @@ const unused=PATCHES.map(p=>p.tag).filter(t=>!done.has(t));if(unused.length)thro
 const content={};
 for(const f of ["read","spell","write"]){const file=`content/learn/${f}.json`;if(existsSync(P(file)))content[f]=JSON.parse(read(file));}
 const contentJs=LEGACY?"":`const CONTENT=${JSON.stringify(content)};\n`;
-const versionJs=LEGACY?"":`const APP_VERSION=${JSON.stringify(VERSION)};\n`;
+const CONFIG={googleClientId:(process.env.GOOGLE_CLIENT_ID||"").trim()};
+if(CONFIG.googleClientId&&!/^[\w.-]+\.apps\.googleusercontent\.com$|^test-/.test(CONFIG.googleClientId))throw new Error("GOOGLE_CLIENT_ID looks wrong");
+const versionJs=LEGACY?"":`const APP_VERSION=${JSON.stringify(VERSION)};\nconst APP_CONFIG=${JSON.stringify(CONFIG)};\n`;
 
 const api='\nreturn {S:()=>S,stopSpeech,openSpeed,closeSpeed,home,U:()=>UNITS,speak,confetti,fanfare,nbTasks,openUnit:id=>go(()=>unit(UNITS[id])),fxStop:()=>{parts=[];}};';
 const js=versionJs+read(APP+"profile.js")+"\n"+read(APP+"rewards.js")
@@ -54,7 +56,7 @@ const js=versionJs+read(APP+"profile.js")+"\n"+read(APP+"rewards.js")
  +"function gConfetti(n){try{EN.confetti(n);}catch(e){}}\nfunction gFanfare(){try{EN.fanfare();}catch(e){}}\n"
  +"const BR=(function(ROOT){\n"+read(APP+"brain.js")+"\n})(document.getElementById('vBrain'));\n"
  +read(APP+"notebook.js")+"\n"+read(APP+"talk.js")+"\n"+contentJs+read(APP+"learn.js")+"\n"+read(APP+"bhasha_data.js")+"\n"+read(APP+"bhasha.js")+"\n"
- +(LEGACY?"":read(APP+"pwa.js")+"\n")+read(APP+"shell.js")+"\n"+read(APP+"store.js");
+ +(LEGACY?"":read(APP+"pwa.js")+"\n"+read(APP+"sync.js")+"\n")+read(APP+"shell.js")+"\n"+read(APP+"store.js");
 if(js.toLowerCase().includes("</script"))throw new Error("</script inside the app source");
 
 /* ---------- css + fonts ---------- */
@@ -71,11 +73,11 @@ const head=LEGACY?"":`<meta name="viewport" content="width=device-width,initial-
 const page=rep1(rep1(t,"<title>",'<!doctype html>\n<html lang="de"><head><meta charset="utf-8">\n'+head+"<title>"),"</style>\n","</style>\n</head><body>\n")+"\n</body></html>\n";
 const hosted=LEGACY?page:rep1(page,"</head>",'<link rel="manifest" href="manifest.webmanifest">\n<link rel="icon" href="icon.svg" type="image/svg+xml">\n<link rel="apple-touch-icon" href="icon-192.png">\n</head>');
 
-const out=path.resolve(ROOT,process.env.OUT_DIR||"dist");mkdirSync(out,{recursive:true});
+const out=path.resolve(ROOT,process.env.OUT_DIR||"dist");if(!LEGACY&&path.relative(ROOT,out)&&!path.relative(ROOT,out).startsWith(".."))rmSync(out,{recursive:true,force:true});else if(!LEGACY&&out.startsWith("/tmp/"))rmSync(out,{recursive:true,force:true});mkdirSync(out,{recursive:true});
 if(LEGACY){writeFileSync(path.join(out,"AaryaAI.legacy.html"),page);console.log("legacy build",page.length);process.exit(0);}
 writeFileSync(path.join(out,"index.html"),hosted);
 writeFileSync(path.join(out,"AaryaAI.html"),page);
 writeFileSync(path.join(out,"version.json"),JSON.stringify(VERSION));
 writeFileSync(path.join(out,"sw.js"),rep(read("src/pwa/sw.js"),"__VERSION__",`${VERSION.version}+${VERSION.build}+${built}`));
-for(const f of ["manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","_headers"])if(existsSync(P("src/pwa",f)))copyFileSync(P("src/pwa",f),path.join(out,f));
+for(const f of ["manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","_headers","privacy.html"])if(existsSync(P("src/pwa",f)))copyFileSync(P("src/pwa",f),path.join(out,f));
 console.log(`built AaryaAI ${VERSION.version}+${VERSION.build}: index.html ${(hosted.length/1024).toFixed(0)} KB`);

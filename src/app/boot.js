@@ -1,5 +1,12 @@
 /* ============================ AaryaAI boot: setup wizard · save file · personalised start ============================ */
 const AAI={PKEY:"aaryaai-profile",KEYS:["aaryaai-profile","aarya-rewards-v1","aarya-grammar-v1","aarya-deutsch-v1","aarya-mathe-v1","aarya-brain-v1","aarya-bhasha-v1","aarya-plan-v1","aarya-tab"]};
+/* change times per storage key (for merging progress from several devices) */
+AAI.MT=(()=>{const K="aaryaai-mtime";let m={};try{m=JSON.parse(localStorage.getItem(K)||"{}")||{};}catch(e){m={};}
+  const S=Storage.prototype,set=S.setItem,rem=S.removeItem,watch=k=>AAI.KEYS.includes(k)&&k!=="aarya-tab";let quiet=false;
+  const mark=k=>{if(quiet)return;m[k]=Date.now();quiet=true;try{set.call(localStorage,K,JSON.stringify(m));}catch(e){}quiet=false;};
+  S.setItem=function(k,v){if(this===localStorage&&watch(k)&&this.getItem(k)!==String(v)){set.call(this,k,v);mark(k);return;}return set.call(this,k,v);};
+  S.removeItem=function(k){const had=this===localStorage&&watch(k)&&this.getItem(k)!=null;rem.call(this,k);if(had)mark(k);};
+  return {all:()=>Object.assign({},m),set:(k,t)=>{m[k]=t;quiet=true;try{set.call(localStorage,K,JSON.stringify(m));}catch(e){}quiet=false;},max:()=>Math.max(0,...Object.values(m))};})();
 /* stored-data schema: bump SCHEMA and add a step to MIGRATE when the shape of saved data changes; runs once per device before the app reads anything */
 AAI.SCHEMA=1;AAI.MIGRATE={/* 1:()=>{…change keys from schema 0 to 1…} */};
 (()=>{try{const k="aaryaai-schema";let v=+(localStorage.getItem(k)||0);if(v>=AAI.SCHEMA)return;

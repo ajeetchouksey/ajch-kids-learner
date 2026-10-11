@@ -31,7 +31,8 @@ const STORE=(function(){let handle=null,perm="none",last="",lastAt=null,err="",c
   function state(){if(!handle)return AAI.canPick()?"none":"nopick";return perm==="granted"?(err?"error":"ok"):"prompt";}
   function ui(){const b=document.getElementById("sbSave");if(b){const s=state();b.textContent={ok:"💾✓",prompt:"💾⚠️",error:"💾⚠️",none:"💾",nopick:"💾"}[s];
       b.title={ok:T(`Gespeichert in ${handle&&handle.name}`,`Saving to ${handle&&handle.name}`),prompt:T("Tippen zum Verbinden","Tap to reconnect the save file"),error:T("Speichern fehlgeschlagen","Saving failed"),none:T("Speicherdatei wählen","Choose a save file"),nopick:T("Sichern","Back up")}[s];
-      b.classList.toggle("warn",s==="prompt"||s==="error");}
+      b.classList.toggle("warn",s==="prompt"||s==="error");
+      try{const c=SYNC.badge();if(c){b.textContent=c[0];b.title=c[1];b.classList.toggle("warn",c[2]);}}catch(e){}}
     const p=document.getElementById("storebox");if(p&&!document.getElementById("vParent").hidden){p.innerHTML=panelInner();wire(p);}}
   function panelInner(){const s=state(),t=lastAt?lastAt.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"}):"";
     const fn=`<b>${AAI.esc(handle&&handle.name)}</b>`;
@@ -52,9 +53,10 @@ const STORE=(function(){let handle=null,perm="none",last="",lastAt=null,err="",c
     on("stOverEx",async()=>{const m=confirmOpen;confirmOpen=false;handle=m.h;perm="granted";last="";await tick(true);ui();});
     const up=p.querySelector("#stUp");if(up)up.onchange=e=>{const f=e.target.files[0];if(f){confirmOpen=f;ui();}};}
   async function init(){handle=await AAI.getHandle();if(handle){try{perm=await handle.queryPermission({mode:"readwrite"});}catch(e){perm="prompt";}}
-    const b=document.getElementById("sbSave");if(b)b.onclick=()=>{state()==="prompt"?connect():show("parent");setTimeout(()=>{const p=document.getElementById("storebox");if(p)p.scrollIntoView({behavior:"smooth",block:"center"});},80);};
+    const b=document.getElementById("sbSave");if(b)b.onclick=()=>{try{if(["auth","error"].includes(SYNC.status())){SYNC.run({interactive:true});return;}}catch(e){}state()==="prompt"?connect():show("parent");setTimeout(()=>{const p=document.getElementById("storebox");if(p)p.scrollIntoView({behavior:"smooth",block:"center"});},80);};
     ui();setInterval(()=>tick(false),4000);document.addEventListener("visibilitychange",()=>{if(document.hidden)tick(true);});if(perm==="granted")tick(true);}
   return {init,snapshot,json,download,panel:()=>`<div class="panel parent" id="storebox">${panelInner()}</div>`,ui,tick,state};})();
 STORE.init();
 startApp();
+try{SYNC.init();}catch(e){}
 window.__aaiOK=true;
