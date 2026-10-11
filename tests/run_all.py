@@ -17,7 +17,9 @@ try:
     bad=r.returncode!=0 or fails or [e for e in errs if e.strip()] or (s=="ah_test.py" and re.search(r"\| \[(?!\])",out)) or (s=="talk_unit2.py" and "→ ERR" in out)
     summary.append(f"{'✗' if bad else '✓'} {s:16s} {npass:3d} passed{'' if not fails else ', '+str(len(fails))+' failed'}  ({time.time()-t0:.0f}s)")
     print(summary[-1],flush=True)
-    if bad:failed.append(s);print("\n".join(fails[:20]) or out[-2000:])
+    if bad:
+      failed.append(s);detail="\n".join(fails[:20]) or out[-2000:];print(detail)
+      if os.environ.get("GITHUB_ACTIONS"):print(f"::error title={s} failed::"+detail.replace("%","%25").replace("\r","").replace("\n","%0A")[:3500])
 finally:srv.terminate()
 print("\n"+"\n".join(summary))
 if failed:sys.exit(f"\nFAILED: {', '.join(failed)}")
