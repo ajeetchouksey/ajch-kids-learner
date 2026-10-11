@@ -131,7 +131,7 @@ with sync_playwright() as p:
     pg.wait_for_timeout(100);msgs.append(pg.inner_text("#toast"))
     if k==0:pg.locator("#appM #next").click()
   ok(any("Langsam" in m for m in msgs) or E("1")==1 and pg.locator("#appM .opt.right").count()==1,"fast guessing shows 'Langsam!' (or the guess was right)",msgs)
-  r=E("()=>{const d=document.createElement('div');d.innerHTML='<button>a</button>';document.body.appendChild(d);GUARD.arm(d,'x','de');return new Promise(res=>setTimeout(()=>{const a=GUARD.after(false,'de'),b=GUARD.after(false,'de');res([a,b,document.getElementById('toast').textContent]);},1100));}")
+  r=E("()=>{const d=document.createElement('div');d.innerHTML='<button>a</button>';document.body.appendChild(d);GUARD.after(true,'de');GUARD.arm(d,'x','de');return new Promise(res=>setTimeout(()=>{const a=GUARD.after(false,'de'),b=GUARD.after(false,'de');res([a,b,document.getElementById('toast').textContent]);},1100));}")
   ok(r[0]==False and r[1]==True and "Langsam" in r[2],"two fast wrong taps in a row → 'Langsam!' and a longer pause next time",r)
   E("PLAN.setOpt('type',true);NBM.set(true);MA.openUnit(3)");pg.wait_for_timeout(200);pg.locator("#appM .mode[data-m=practice]").click();pg.wait_for_timeout(400)
   ok(pg.locator("#appM .nbgate").count()==1 and not pg.locator("#appM .kp").is_visible(),"Heft-Modus: keypad waits until the answer is written in the notebook")
