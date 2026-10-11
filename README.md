@@ -1,62 +1,19 @@
-# Kids Story Learner
+# AaryaAI – Lernwelt für Klasse 1
 
-A web application designed to help kids learn to read by highlighting phonetic blends in stories.
+An offline, single-file learning app for children in Klasse 1 at a German Grundschule.
+**Live:** https://ajeetchouksey.github.io/ajch-kids-learner/ — or download `index.html` and open it in Chrome or Edge – no install, no server, no account. Everything stays in the browser.
 
-## Features
+**Areas:** Deutsch · Mathe (incl. "Denken und Rechnen" Arbeitsheft) · English · हिंदी / मराठी (native voices, 31 graded lessons each, letter tracing) · Training · Heft-Zeit (notebook work)
 
-- **📝 Story Upload**: Create and upload stories with text and optional images
-- **🔍 OCR Text Extraction**: Extract text from uploaded images using Tesseract.js
-- **📚 Story Management**: View, read, and delete stored stories
-- **🎨 Phonetic Highlighting**: Automatic highlighting of starting and ending blends
-- **💾 Local Storage**: Stories are saved in browser's local storage
-- **📱 Responsive Design**: Works on desktop, tablet, and mobile devices
+**Learning first:** a daily Lernplan – read a story and answer questions, spell words from letter tiles, write one sentence in the notebook (parent checklist), one maths round with typed answers. Games unlock afterwards (parents can change this).
 
-## How It Works
-
-1. **Upload Stories**: Add story title, text content, and optional images
-2. **OCR Text Extraction**: Upload an image with text and click "🔍 Extract Text from Image" to automatically extract and populate the story text
-3. **Browse Stories**: View all uploaded stories in a grid layout
-4. **Read with Highlights**: Stories display with phonetic blends highlighted:
-   - **Green highlights**: Starting blends (bl, br, cl, cr, dr, fl, fr, gl, gr, pl, pr, sc, sk, sl, sm, sn, sp, st, sw, tr, tw, ch, sh, th, wh, ph)
-   - **Orange highlights**: Ending blends (ing, tion, sion, ness, ment, ly, ed, er, est, an, en, on, ck, ng, nk, mp, nd, nt)
-5. **Toggle Function**: Turn highlights on/off for comparison
-
-## Getting Started
-
-1. Open `index.html` in a web browser
-2. Or serve using a local web server:
-   ```bash
-   python3 -m http.server 8000
-   ```
-3. Navigate to `http://localhost:8000`
-
-## Example Usage
-
-The app comes with sample stories to demonstrate the functionality:
-- "The Smart Cat" - Shows various phonetic blends
-- "The Flying Bird" - Demonstrates different blend patterns
-
-## Educational Benefits
-
-- Helps children identify phonetic patterns
-- Improves reading fluency through visual cues
-- Encourages story creation and reading comprehension
-- Supports self-paced learning
-
-## Technical Details
-
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **OCR Library**: Tesseract.js for client-side text extraction
-- **Storage**: Browser Local Storage API
-- **Responsive**: CSS Grid and Flexbox
-- **No Dependencies**: Pure vanilla JavaScript implementation with optional OCR enhancement
-
-## File Structure
-
+## Source
+`src/combo/build.py` builds the app from the files in `src/`:
+```bash
+cd src/combo && python3 build.py   # → AaryaAI.html (offline) and aaryaai.html
 ```
-├── index.html          # Main application page
-├── styles.css          # Styling and responsive design
-├── script.js           # Application logic and functionality
-├── README.md           # Documentation
-└── .gitignore          # Git ignore rules
-```
+Tests (Playwright, Chromium) live in `src/combo/*_test.py`; run them over http (`python3 -m http.server 8765`).
+Fonts: Andika, Fredoka, Noto Sans Devanagari (SIL Open Font License).
+
+
+_The earlier "Kids Story Learner" app was replaced by AaryaAI; it is still in the git history (commit a9fa437)._
